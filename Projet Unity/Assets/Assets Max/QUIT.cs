@@ -5,11 +5,9 @@ public class QUIT : MonoBehaviour
 {
 
 
-    public void Quit()
+     public void Quit()
     {
-        
-        
-            Application.Quit();
+        Application.Quit();
         
     }
 
