@@ -5,6 +5,7 @@
 *.pydevproject
 .project
 *.metadata
+.metadata
 metadata/
 bin/
 tmp/
@@ -41,6 +42,7 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
+*.sln
 
 # Build results
 
