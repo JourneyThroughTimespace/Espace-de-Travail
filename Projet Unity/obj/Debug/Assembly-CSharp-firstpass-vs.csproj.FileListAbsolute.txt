@@ -4,9 +4,10 @@ G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\UnityEditor.dll
 G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\UnityEngine.dll
 G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\UnityEngine.UI.dll
 G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\Mono.Cecil.dll
-G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\nunit.framework.dll
 G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\Unity.DataContract.dll
 G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\ICSharpCode.NRefactory.dll
 G:\JTT\Espace-de-Travail\Projet Unity\obj\Debug\Assembly-CSharp-firstpass-vs.csprojResolveAssemblyReference.cache
 G:\JTT\Espace-de-Travail\Projet Unity\obj\Debug\Assembly-CSharp-firstpass.dll
 G:\JTT\Espace-de-Travail\Projet Unity\obj\Debug\Assembly-CSharp-firstpass.pdb
+G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\Unity.SerializationLogic.dll
+G:\JTT\Espace-de-Travail\Projet Unity\Temp\bin\Debug\Unity.CecilTools.dll

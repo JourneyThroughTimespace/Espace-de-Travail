@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Assets Max\GameMusic.cs" />
      <Compile Include="Assets\Assets Max\GoToCrédits.cs" />
      <Compile Include="Assets\Assets Max\QUIT.cs" />
      <Compile Include="Assets\Assets Max\retourmenu.cs" />
