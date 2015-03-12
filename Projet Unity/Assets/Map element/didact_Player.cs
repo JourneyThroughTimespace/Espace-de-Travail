@@ -22,22 +22,22 @@ public class didact_Player : MonoBehaviour {
         if (Input.GetKeyDown("w") && !Physics.Raycast(transform.position, fwd, 1))
         {
             transform.Translate(Vector3.forward);
-            Map_didact.instance.change_state(1);
+            Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
         }
         if (Input.GetKeyDown("a") && !Physics.Raycast(transform.position, lef, 1))
         {
             transform.Translate(Vector3.left);
-            Map_didact.instance.change_state(1);
+            Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
         }
         if (Input.GetKeyDown("s") && !Physics.Raycast(transform.position, bac, 1))
         {
             transform.Translate(Vector3.back);
-            Map_didact.instance.change_state(1);
+            Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
         }
         if (Input.GetKeyDown("d") && !Physics.Raycast(transform.position, rig, 1))
         {
             transform.Translate(Vector3.right);
-            Map_didact.instance.change_state(1);
+            Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
         }
     }
 }
