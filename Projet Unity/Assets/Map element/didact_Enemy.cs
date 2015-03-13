@@ -1,46 +1,107 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class didact_Enemy : MonoBehaviour 
+public class didact_Enemy : MonoBehaviour
 {
+    public int life = 10;
+    public int dmg = 2;
 
-	// Use this for initialization
-	void Start () 
+    public static didact_Enemy instance;
+    //private Transform Target;
+    void Start()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-	
-	}
+        instance = this;
+        //Target = GameObject.FindGameObjectWithTag("perso").transform;
+    }
 
+    public void LoseLife(int loss)
+    {
+        life -= loss;
+        if (life <= 0)
+        {
+            dmg = 0;
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
+        }
+    }
+    void Update()
+    {
+
+    }
     public void TurnUpdate(Transform Target)
     {
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
         Vector3 lef = transform.TransformDirection(Vector3.left);
         Vector3 bac = transform.TransformDirection(Vector3.back);
         Vector3 rig = transform.TransformDirection(Vector3.right);
-        if ((Target.position.x > transform.position.x) && !Physics.Raycast(transform.position, fwd, 1))
+
+        if (Target.position.x > transform.position.x)
         {
-            transform.Translate(Vector3.right);
+            //transform.Translate(Vector3.right);
             //Map_didact.instance.change_state(0);
+            RaycastHit hit;
+            bool b = Physics.Raycast(transform.position, rig, out hit, 1);
+            if (!Physics.Raycast(transform.position, rig, 1))
+            {
+                transform.Translate(Vector3.right);
+                Map_didact.instance.change_state(0);
+            }
+            else if (hit.collider.tag == "Player")
+            {
+                didact_Player.instance.LoseLife(dmg);
+                Map_didact.instance.change_state(0);
+            }
         }
-        else if ((Target.position.x < transform.position.x) && !Physics.Raycast(transform.position, lef, 1))
+        else if (Target.position.x < transform.position.x)
         {
-            transform.Translate(Vector3.left);
+            //transform.Translate(Vector3.left);
             //Map_didact.instance.change_state(0);
+            RaycastHit hit;
+            bool b = Physics.Raycast(transform.position, lef, out hit, 1);
+            if (!Physics.Raycast(transform.position, lef, 1))
+            {
+                transform.Translate(Vector3.left);
+                Map_didact.instance.change_state(0);
+            }
+            else if (hit.collider.tag == "Player")
+            {
+                didact_Player.instance.LoseLife(dmg);
+                Map_didact.instance.change_state(0);
+            }
         }
-        else if ((Target.position.z > transform.position.z) && !Physics.Raycast(transform.position, bac, 1))
+        else if (Target.position.z > transform.position.z)
         {
-            transform.Translate(Vector3.forward);
+            //transform.Translate(Vector3.forward);
             //Map_didact.instance.change_state(0);
+            RaycastHit hit;
+            bool b = Physics.Raycast(transform.position, fwd, out hit, 1);
+            if (!Physics.Raycast(transform.position, fwd, 1))
+            {
+                transform.Translate(Vector3.forward);
+                Map_didact.instance.change_state(0);
+            }
+            else if (hit.collider.tag == "Player")
+            {
+                didact_Player.instance.LoseLife(dmg);
+                Map_didact.instance.change_state(0);
+            }
         }
-        else //if (!Physics.Raycast(transform.position, rig, 1))
+        else
         {
-            transform.Translate(Vector3.back);
+            //transform.Translate(Vector3.back);
+            //Map_didact.instance.change_state(0);
+            RaycastHit hit;
+            bool b = Physics.Raycast(transform.position, bac, out hit, 1);
+            if (!Physics.Raycast(transform.position, bac, 1))
+            {
+                transform.Translate(Vector3.back);
+                Map_didact.instance.change_state(0);
+            }
+            else if (hit.collider.tag == "Player")
+            {
+                didact_Player.instance.LoseLife(dmg);
+                Map_didact.instance.change_state(0);
+            }
         }
-        Map_didact.instance.change_state(0);
     }
 }

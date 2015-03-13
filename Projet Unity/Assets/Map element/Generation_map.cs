@@ -8,6 +8,7 @@ public class Generation_map : MonoBehaviour
     public GameObject brick;
     public GameObject perso;
     public GameObject sol;
+    public GameObject exit;
 
     private void fullBrick()
     {
@@ -19,11 +20,15 @@ public class Generation_map : MonoBehaviour
             }
         }
     }
+    public int longueur = 100;
+    public int largeur = 100;
+    public int RoomX = 11;
+    public int RoomY = 7;
 
     private void Isaac()
     {
-        int longueur = 41;
-        int largeur = 41;
+        //int longueur = 100;
+        //int largeur = 100;
         char[,] TabMap = new char[longueur, largeur];
         for (int i = 0; i < longueur; i++) // init
         {
@@ -33,8 +38,8 @@ public class Generation_map : MonoBehaviour
             }
         }
 
-        int RoomX = 5;
-        int RoomY = 3;
+        //int RoomX = 11;
+        //int RoomY = 7;
         int mx = longueur / 2 - (RoomX / 2);
         int my = largeur / 2 - (RoomY / 2);
 
@@ -100,27 +105,54 @@ public class Generation_map : MonoBehaviour
                 }
             }
         }
-        int px = 20;
-        int py = 20;
+        int px = longueur/2;
+        int py = largeur/2;
         TabMap[px, py] = 'p'; // placement personnage
-        
-
-
-        for (int i = 0; i < longueur; i++) // creation map
+        //int pos = Random.Range(1, 5);
+        bool b = true;
+        while (b)
         {
-            for (int j = 0; j < largeur; j++)
+            int posx = Random.Range(1, longueur-1);
+            int posy = Random.Range(1, largeur - 1);
+            if(TabMap[posx,posy] == 'e')
             {
-                Instantiate(sol, new Vector3(i - 20, -0.5f, j - 20), Quaternion.identity);
-                if (TabMap[i, j] == 'w')
-                {
-                    Instantiate(brick, new Vector3(i - 20, 0, j - 20), Quaternion.identity);
-                }
-                if (TabMap[i, j] == 'p')
-                {
-                    Instantiate(perso, new Vector3(i - 20, 0, j - 20), Quaternion.identity);
-                }
+                TabMap[posx, posy] = 's';
+                b = false;
             }
         }
+        /*b = true;
+        while (b)
+        {
+            int posx = Random.Range(1, longueur - 1);
+            int posy = Random.Range(1, largeur - 1);
+            if (TabMap[posx, posy] == 'e')
+            {
+                TabMap[posx, posy] = 'p';
+                b = false;
+            }
+        }*/
+
+
+
+            for (int i = 0; i < longueur; i++) // creation map
+            {
+                for (int j = 0; j < largeur; j++)
+                {
+                    Instantiate(sol, new Vector3(i, -0.5f, j), Quaternion.identity);
+                    if (TabMap[i, j] == 'w')
+                    {
+                        Instantiate(brick, new Vector3(i, 0, j), Quaternion.identity);
+                    }
+                    if (TabMap[i, j] == 'p')
+                    {
+                        Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
+                    }
+                    if (TabMap[i, j] == 's')
+                    {
+                        Instantiate(exit, new Vector3(i, 0, j), Quaternion.identity);
+                    }
+                }
+            }
     }
 
 	// Use this for initialization
@@ -132,6 +164,9 @@ public class Generation_map : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-	
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.LoadLevel("Menu0.1");
+        }
 	}
 }

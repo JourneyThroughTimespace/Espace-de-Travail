@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Map_didact : MonoBehaviour
 {
@@ -14,7 +15,13 @@ public class Map_didact : MonoBehaviour
     didact_Player p1;
     didact_Enemy en;
 
+    //int level = 1;
     public int game_state = 0;
+    public void GameOver()
+    {
+        //enabled = false;
+        Application.LoadLevel("Menu0.1");
+    }
 
     void Awake()
     {
@@ -26,7 +33,7 @@ public class Map_didact : MonoBehaviour
         {
             for (int x = 0; x < 21; x++)
             {
-                Instantiate(sol, new Vector3(x, -0.5f, y), Quaternion.identity);
+                
                 if (x == 19 && y == 20)
                 {
                     Instantiate(sortie, new Vector3(x, 0, y), Quaternion.identity);
@@ -37,6 +44,7 @@ public class Map_didact : MonoBehaviour
                 }
             }
         }
+        Instantiate(sol, new Vector3(10, -0.5f, 10), Quaternion.identity);
         p1 = ((GameObject)Instantiate(perso, new Vector3(10, 0, 3), Quaternion.identity)).GetComponent<didact_Player>();
         en = ((GameObject)Instantiate(enemy, new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<didact_Enemy>(); ;
     }
@@ -53,7 +61,11 @@ public class Map_didact : MonoBehaviour
 
     void Update()
     {
-        if (game_state == 0 || game_state == 1)
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.LoadLevel("Menu0.1");
+        }
+        if ( game_state <= 1)
         {
             p1.TurnUpdate();
         }
@@ -62,4 +74,5 @@ public class Map_didact : MonoBehaviour
             en.TurnUpdate(p1.transform);
         }
     }
+
 }

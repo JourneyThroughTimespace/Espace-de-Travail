@@ -10,7 +10,10 @@ public class Temp_Perso_mvt : MonoBehaviour {
     {
         instance = this;
 	}
-
+    private void NextLevel()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
 	
 	// Update is called once per frame
 	void Update () 
@@ -19,33 +22,80 @@ public class Temp_Perso_mvt : MonoBehaviour {
         Vector3 lef = transform.TransformDirection(Vector3.left);
         Vector3 bac = transform.TransformDirection(Vector3.back);
         Vector3 rig = transform.TransformDirection(Vector3.right);
-        if (Input.GetKeyDown("w") && !Physics.Raycast(transform.position, fwd, 1))
+        if (Input.GetKeyDown("z"))// && !Physics.Raycast(transform.position, fwd, 1))
         {
-            transform.Translate(Vector3.forward);
-            have_move(true);
-            Camera_mvt.instance.Cam_mvt_up();
-            Light_mvt.instance.light_mvt_up();
+            RaycastHit hit;
+            bool b = Physics.Raycast(transform.position, fwd, out hit, 1);
+            if (!Physics.Raycast(transform.position, fwd, 1))
+            {
+                transform.Translate(Vector3.forward);
+                have_move(true);
+                Camera_mvt.instance.Cam_mvt_up();
+                Light_mvt.instance.light_mvt_up();
+
+                //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
+            }
+            else if (hit.collider.tag == "Exit")
+            {
+                NextLevel();
+            }
         }
-        if (Input.GetKeyDown("a") && !Physics.Raycast(transform.position, lef, 1))
+        if (Input.GetKeyDown("q"))// && !Physics.Raycast(transform.position, lef, 1))
         {
-            transform.Translate(Vector3.left); 
-            have_move(true);
-            Camera_mvt.instance.Cam_mvt_left();
-            Light_mvt.instance.light_mvt_left();
+            //transform.Translate(Vector3.left);
+            //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
+            RaycastHit hit;
+            bool b = Physics.Raycast(transform.position, lef, out hit, 1);
+            if (!Physics.Raycast(transform.position, lef, 1))
+            {
+                transform.Translate(Vector3.left);
+                have_move(true);
+                Camera_mvt.instance.Cam_mvt_left();
+                Light_mvt.instance.light_mvt_left();
+                //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
+            }
+            else if (hit.collider.tag == "Exit")
+            {
+                NextLevel();
+            }
         }
-        if (Input.GetKeyDown("s") && !Physics.Raycast(transform.position, bac, 1))
+        if (Input.GetKeyDown("s"))// && !Physics.Raycast(transform.position, bac, 1))
         {
-            transform.Translate(Vector3.back);
-            have_move(true);
-            Camera_mvt.instance.Cam_mvt_down();
-            Light_mvt.instance.light_mvt_down();
+            //transform.Translate(Vector3.back);
+            //Map_didact.instance.change_state(M_didact.instance.game_state + 1);
+            RaycastHit hit;
+            bool b = Physics.Raycast(transform.position, bac, out hit, 1);
+            if (!Physics.Raycast(transform.position, bac, 1))
+            {
+                transform.Translate(Vector3.back);
+                have_move(true);
+                Camera_mvt.instance.Cam_mvt_down();
+                Light_mvt.instance.light_mvt_down();
+                //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
+            }
+            else if (hit.collider.tag == "Exit")
+            {
+                NextLevel();
+            }
         }
-        if (Input.GetKeyDown("d") && !Physics.Raycast(transform.position, rig, 1))
+        if (Input.GetKeyDown("d"))// && !Physics.Raycast(transform.position, rig, 1))
         {
-            transform.Translate(Vector3.right);
-            have_move(true);
-            Camera_mvt.instance.Cam_mvt_right();
-            Light_mvt.instance.light_mvt_right();
+            //transform.Translate(Vector3.right);
+            //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
+            RaycastHit hit;
+            bool b = Physics.Raycast(transform.position, rig, out hit, 1);
+            if (!Physics.Raycast(transform.position, rig, 1))
+            {
+                transform.Translate(Vector3.right);
+                have_move(true);
+                Camera_mvt.instance.Cam_mvt_right();
+                Light_mvt.instance.light_mvt_right();
+                //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
+            }
+            else if (hit.collider.tag == "Exit")
+            {
+                NextLevel();
+            }
         }
 	}
 
