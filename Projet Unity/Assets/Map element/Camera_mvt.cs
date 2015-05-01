@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Camera_mvt : MonoBehaviour 
 {
     public static Camera_mvt instance;
-
 	// Use this for initialization
+   
 	void Start () 
     {
         instance = this;
@@ -18,34 +19,46 @@ public class Camera_mvt : MonoBehaviour
 	}
     public void Cam_mvt_up()
     {
-        if (Temp_Perso_mvt.instance.move)
-        {
-            transform.Translate(Vector3.up);
-            //Temp_Perso_mvt.instance.have_move(false);
-        }
+        transform.Rotate(30, 0, 0);
+        transform.Translate(Vector3.up);
+        transform.Rotate(-30, 0, 0);
+        //transform.position = Vector3.Lerp(transform.position, target.transform.position, 5f * Time.deltaTime);
     }
     public void Cam_mvt_left()
     {
-        if (Temp_Perso_mvt.instance.move)
-        {
-            transform.Translate(Vector3.left);
-            //Temp_Perso_mvt.instance.have_move(false);
-        }
+        transform.Translate(Vector3.left);
     }
     public void Cam_mvt_down()
     {
-        if (Temp_Perso_mvt.instance.move)
-        {
-            transform.Translate(Vector3.down);
-            //Temp_Perso_mvt.instance.have_move(false);
-        }
+        transform.Rotate(30, 0, 0);
+        transform.Translate(Vector3.down);
+        transform.Rotate(-30, 0, 0);
     }
     public void Cam_mvt_right()
     {
-        if (Temp_Perso_mvt.instance.move)
-        {
-            transform.Translate(Vector3.right);
-            //Temp_Perso_mvt.instance.have_move(false);
-        }
+        transform.Translate(Vector3.right);
     }
+
+
+
+    /*
+    public Transform target;            // The position that that camera will be following.
+    public float smoothing = 5f;        // The speed with which the camera will be following.
+
+    Vector3 offset;                     // The initial offset from the target.
+
+    void Start()
+    {
+        // Calculate the initial offset.
+        offset = transform.position - target.position;
+    }
+
+    void FixedUpdate()
+    {
+        // Create a postion the camera is aiming for based on the offset from the target.
+        Vector3 targetCamPos = target.position + offset;
+
+        // Smoothly interpolate between the camera's current position and it's target position.
+        transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
+    }*/
 }
