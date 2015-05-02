@@ -5,17 +5,30 @@ public class Temp_Perso_mvt : MonoBehaviour {
 
     public static Temp_Perso_mvt instance;
     public bool move = false;
-	
+    public int life = 10;
+    public int dmg = 20;
+    public int range = 1;
+
+
+
+    public void LoseLife(int loss)
+    {
+        life -= loss;
+        if (life <= 0)
+        {
+            Generation_map.instance.GameOver();
+        }
+    }
 
 	void Start () 
     {
         instance = this;
 	}
+
     private void NextLevel()
     {
         Application.LoadLevel(Application.loadedLevel);
     }
-	
 	
 	void Update () 
     {
@@ -39,7 +52,12 @@ public class Temp_Perso_mvt : MonoBehaviour {
             }
             else if (hit.collider.tag == "Enemy")
             {
-                //didact_Enemy.instance.LoseLife(dmg);
+                temp_enemy_mvt.instance.LoseLife(dmg);
+                Generation_map.instance.turn++;
+            }
+            else if (hit.collider.tag == "blocking")
+            {
+                Destroy(hit.collider.gameObject);
                 Generation_map.instance.turn++;
             }
         }
@@ -54,7 +72,12 @@ public class Temp_Perso_mvt : MonoBehaviour {
             }
             else if (hit.collider.tag == "Enemy")
             {
-                //didact_Enemy.instance.LoseLife(dmg);
+                temp_enemy_mvt.instance.LoseLife(dmg);
+                Generation_map.instance.turn++;
+            }
+            else if (hit.collider.tag == "blocking")
+            {
+                Destroy(hit.collider.gameObject);
                 Generation_map.instance.turn++;
             }
         }
@@ -69,7 +92,12 @@ public class Temp_Perso_mvt : MonoBehaviour {
             }
             else if (hit.collider.tag == "Enemy")
             {
-                //didact_Enemy.instance.LoseLife(dmg);
+                temp_enemy_mvt.instance.LoseLife(dmg);
+                Generation_map.instance.turn++;
+            }
+            else if (hit.collider.tag == "blocking")
+            {
+                Destroy(hit.collider.gameObject);
                 Generation_map.instance.turn++;
             }
         }
@@ -84,7 +112,12 @@ public class Temp_Perso_mvt : MonoBehaviour {
             }
             else if (hit.collider.tag == "Enemy")
             {
-                //didact_Enemy.instance.LoseLife(dmg);
+                temp_enemy_mvt.instance.LoseLife(dmg);
+                Generation_map.instance.turn++;
+            }
+            else if (hit.collider.tag == "blocking")
+            {
+                Destroy(hit.collider.gameObject);
                 Generation_map.instance.turn++;
             }
         }

@@ -18,8 +18,10 @@ public class BoardManager : MonoBehaviour
     public Light light;
 
 
-
     private GameObject perso;
+
+    Temp_Perso_mvt pl;
+    temp_enemy_mvt en;
     //private List<Enemy>
 
     public int min_room_size = 5;

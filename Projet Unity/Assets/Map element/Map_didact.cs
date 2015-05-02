@@ -46,7 +46,7 @@ public class Map_didact : MonoBehaviour
         }
         Instantiate(sol, new Vector3(10, -0.5f, 10), Quaternion.identity);
         p1 = ((GameObject)Instantiate(perso, new Vector3(10, 0, 3), Quaternion.identity)).GetComponent<didact_Player>();
-        en = ((GameObject)Instantiate(enemy, new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<didact_Enemy>(); ;
+        en = ((GameObject)Instantiate(enemy, new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<didact_Enemy>(); 
     }
 
     public void change_state(int t)

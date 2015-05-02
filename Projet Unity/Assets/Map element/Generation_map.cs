@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 public class Generation_map : MonoBehaviour
 {
 
+    public static Generation_map instance;
+    public int turn = 0;
 
     public GameObject brick;
     public GameObject perso;
@@ -19,7 +21,9 @@ public class Generation_map : MonoBehaviour
     public GameObject enemies;
     //public GameObject light;
     public Light light;
-    
+
+    Temp_Perso_mvt p1;
+    temp_enemy_mvt enem;
 
     //a_maze_ing
     public int min_room_size = 5;
@@ -626,14 +630,16 @@ public class Generation_map : MonoBehaviour
                 }
                 if (board[i, j] == 'p')
                 {
-                    Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
+                    p1 = ((GameObject)Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity)).GetComponent<Temp_Perso_mvt>();
+                    //Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
                     Instantiate(light, new Vector3(i, 0, j), Quaternion.identity);
                     //Instantiate(camera, new Vector3(i, 6, j - 5), Quaternion.Euler(60,0,0));
                     Instantiate(camera, new Vector3(25, 50, 25), Quaternion.Euler(90, 0, 0));
                 }
                 if (board[i, j] == 'a')
                 {
-                    Instantiate(enemies/*[Random.Range(0, enemies.Length)]*/, new Vector3(i, 0, j), Quaternion.identity);
+                    enem = ((GameObject)Instantiate(enemies, new Vector3(i, 0, j), Quaternion.identity)).GetComponent<temp_enemy_mvt>();
+                    //Instantiate(enemies/*[Random.Range(0, enemies.Length)]*/, new Vector3(i, 0, j), Quaternion.identity);
                 }
             }
         }
@@ -654,15 +660,12 @@ public class Generation_map : MonoBehaviour
 
     }
 
-    public char[,] resolution(char[,] sol, Transform player, Transform enemy)
+    public string solve(char[,] sol, Transform player, Transform enemy)
     {
         int en_x = (int)enemy.transform.position.x;
         int en_y = (int)enemy.transform.position.z;
         int pl_x = (int)player.transform.position.x;
         int pl_y = (int)player.transform.position.z;
-
-        sol[en_x, en_y] = 'E';
-        sol[pl_x, pl_y] = 'P';
 
 
         string[,] temp_board = new string[dungeon_width, dungeon_length];
@@ -681,11 +684,11 @@ public class Generation_map : MonoBehaviour
             }
         }
         //temp_board[depart.ElementAt(0), depart.ElementAt(1)] = "d";
-        temp_board[pl_x, pl_y] = "o";
-
+        temp_board[en_x, en_y] = "o";
+        
         int distance = 0;
         List<List<int>> current = new List<List<int>>();
-        current.Add(new List<int> { en_x, en_y });
+        current.Add(new List<int> { pl_x, pl_y });
         List<List<int>> next = new List<List<int>>();
         bool solution = false;
         while (!solution)
@@ -716,51 +719,26 @@ public class Generation_map : MonoBehaviour
             }
             next.Clear();
         }
-        distance--;
-        int x_sol = pl_x;
-        int y_sol = pl_y;
-        while (solution)
+        distance -= 2;
+        if (temp_board[en_x - 1, en_y] == Convert.ToString(distance))
         {
-            string rang = Convert.ToString(distance);
-            if (temp_board[x_sol, y_sol] == "0")
-            {
-                temp_board[x_sol, y_sol] = "d";
-                solution = false;
-            }
-            else
-            {
-                temp_board[x_sol, y_sol] = "c";
-                if (temp_board[x_sol - 1, y_sol] == rang)
-                {
-                    x_sol--;
-                }
-                else if (temp_board[x_sol + 1, y_sol] == rang)
-                {
-                    x_sol++;
-                }
-                else if (temp_board[x_sol, y_sol - 1] == rang)
-                {
-                    y_sol--;
-                }
-                else if (temp_board[x_sol, y_sol + 1] == rang)
-                {
-                    y_sol++;
-                }
-            }
-            distance--;
+            return ("left"); // left pour unity, pas pour la console
         }
-        for (int i = 0; i < dungeon_width; i++)
+        else if (temp_board[en_x + 1, en_y] == Convert.ToString(distance))
         {
-            for (int j = 0; j < dungeon_length; j++)
-            {
-                if (temp_board[i, j] == "c")
-                {
-                    sol[i, j] = 'c';
-                }
-            }
+            return ("right");
         }
-        return sol;
+        else if (temp_board[en_x, en_y + 1] == Convert.ToString(distance))
+        {
+            return ("forward");
+        }
+        else //if (temp_board[en_x, en_y - 1] == Convert.ToString(distance))
+        {
+            return ("back");
+        }
     }
+    
+
 
     public static bool verif(char[,] tab, int a, int b)
     {
@@ -775,27 +753,27 @@ public class Generation_map : MonoBehaviour
         return compte >= 3;
     }
 
-    // Use this for initialization
     void Start()
     {
         instance = this;
         a_maze_ing();
     }
 
-    public static Generation_map instance;
-    public int turn = 0;
     
-    
+    public void GameOver()
+    {
+        Application.LoadLevel("Menu0.1");
+    }
     
     void Update()
     {
-        if(turn%3 == 2)
+        if(turn % 3 == 2)
         {
-            temp_enemy_mvt.instance.enemy_Turn(gameBoard, Temp_Perso_mvt.instance.transform);
+            enem.enemy_Turn(gameBoard, p1.transform);
         }
         else
         {
-            Temp_Perso_mvt.instance.player_turn();
+            p1.player_turn();
         }
 
 
