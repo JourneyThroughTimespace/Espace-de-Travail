@@ -9,12 +9,18 @@ using Random = UnityEngine.Random;
 public class BoardManager : MonoBehaviour 
 {
     public GameObject brick;
-    public GameObject perso;
     public GameObject sol;
     public GameObject exit;
     public GameObject[] decor;
     public GameObject[] enemies;
+    public GameObject camera;
+    //public GameObject light;
+    public Light light;
 
+
+
+    private GameObject perso;
+    //private List<Enemy>
 
     public int min_room_size = 5;
     public int max_room_size = 10;
@@ -630,7 +636,10 @@ public class BoardManager : MonoBehaviour
                 }
                 if (board[i, j] == 'p')
                 {
-                    Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
+                    //Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
+                    transform.position = new Vector3(i, 0, j);
+                    Instantiate(light, new Vector3(i, 0, j), Quaternion.identity);
+                    Instantiate(camera, new Vector3(i, 6, j - 5), Quaternion.Euler(60, 0, 0));
                 }
                 if (board[i, j] == 'a')
                 {
@@ -661,8 +670,9 @@ public class BoardManager : MonoBehaviour
     }
     
     
-    public void setupScene(int level)
+    public void setupScene(int level, GameObject perso)
     {
+        this.perso = perso;
         a_maze_ing((int)Math.Exp(level));
     }
 	

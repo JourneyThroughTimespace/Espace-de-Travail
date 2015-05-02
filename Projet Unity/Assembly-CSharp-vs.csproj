@@ -70,6 +70,7 @@
      <Compile Include="Assets\Design element\SciFi level\Standard Assets\Image Effects (Pro Only)\VortexEffect.cs" />
      <Compile Include="Assets\Map element\Board Manager.cs" />
      <Compile Include="Assets\Map element\Camera_mvt.cs" />
+     <Compile Include="Assets\Map element\Enemy.cs" />
      <Compile Include="Assets\Map element\Game Manager.cs" />
      <Compile Include="Assets\Map element\Generation_map.cs" />
      <Compile Include="Assets\Map element\Light_mvt.cs" />
@@ -78,6 +79,7 @@
      <Compile Include="Assets\Map element\Temp_Perso_mvt.cs" />
      <Compile Include="Assets\Map element\didact_Enemy.cs" />
      <Compile Include="Assets\Map element\didact_Player.cs" />
+     <Compile Include="Assets\Map element\temp_enemy_mvt.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Design element\SciFi level\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />

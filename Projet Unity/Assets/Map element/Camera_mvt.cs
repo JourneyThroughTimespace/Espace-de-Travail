@@ -22,7 +22,6 @@ public class Camera_mvt : MonoBehaviour
         transform.Rotate(30, 0, 0);
         transform.Translate(Vector3.up);
         transform.Rotate(-30, 0, 0);
-        //transform.position = Vector3.Lerp(transform.position, target.transform.position, 5f * Time.deltaTime);
     }
     public void Cam_mvt_left()
     {

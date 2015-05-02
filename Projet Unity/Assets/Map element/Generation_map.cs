@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System;
+using Random = UnityEngine.Random;
 
 public class Generation_map : MonoBehaviour
 {
@@ -14,21 +16,10 @@ public class Generation_map : MonoBehaviour
     public GameObject exit;
     public GameObject[] decor;
     public GameObject camera;
-
-    private void fullBrick()
-    {
-        for (int y = -20; y < 21; y++)
-        {
-            for (int x = -20; x < 21; x++)
-            {
-                Instantiate(brick, new Vector3(x, 0, y), Quaternion.identity);
-            }
-        }
-    }
-    public int longueur = 100;
-    public int largeur = 100;
-    public int RoomX = 11;
-    public int RoomY = 7;
+    public GameObject enemies;
+    //public GameObject light;
+    public Light light;
+    
 
     //a_maze_ing
     public int min_room_size = 5;
@@ -37,131 +28,8 @@ public class Generation_map : MonoBehaviour
     public int dungeon_width = 50;
     public int density_room = 80;
 
-    private void Isaac()
-    {
-        char[,] TabMap = new char[longueur, largeur];
-        for (int i = 0; i < longueur; i++) // init
-        {
-            for (int j = 0; j < largeur; j++)
-            {
-                TabMap[i, j] = 'w';
-            }
-        }
-
-        int mx = longueur / 2 - (RoomX / 2);
-        int my = largeur / 2 - (RoomY / 2);
-
-        for (int i = 0; i < RoomX; i++) // salle central
-        {
-            for (int j = 0; j < RoomY; j++)
-            {
-                TabMap[mx + i, my + j] = 'e';
-            }
-        }
-        for (int compt = 0; compt < 75; compt++)
-        {
-            int pos = Random.Range(1, 5);
-            if ((pos == 1) && (my > RoomY + 2)) // salle dessus
-            {
-                TabMap[mx + (RoomX / 2), my - 1] = 'd';
-                my = my - (RoomY + 1);
-                for (int i = 0; i < RoomX; i++)
-                {
-                    for (int j = 0; j < RoomY; j++)
-                    {
-                        TabMap[mx + i, my + j] = 'e';
-                    }
-                }
-            }
-
-            if ((pos == 2) && (mx < longueur - (2 * RoomX + 1))) // salle droite
-            {
-                TabMap[mx + RoomX, my + RoomY / 2] = 'd';
-                mx = mx + RoomX + 1;
-                for (int i = 0; i < RoomX; i++)
-                {
-                    for (int j = 0; j < RoomY; j++)
-                    {
-                        TabMap[mx + i, my + j] = 'e';
-                    }
-                }
-            }
-
-            if ((pos == 3) && (my < largeur - (2 * RoomY + 1))) // salle dessous
-            {
-                TabMap[mx + RoomX / 2, my + RoomY] = 'd';
-                my = my + RoomY + 1;
-                for (int i = 0; i < RoomX; i++)
-                {
-                    for (int j = 0; j < RoomY; j++)
-                    {
-                        TabMap[mx + i, my + j] = 'e';
-                    }
-                }
-            }
-
-            if ((pos == 4) && (mx > RoomX + 1)) // salle gauche
-            {
-                TabMap[mx - 1, my + RoomY / 2] = 'd';
-                mx = mx - (RoomX + 1);
-                for (int i = 0; i < RoomX; i++)
-                {
-                    for (int j = 0; j < RoomY; j++)
-                    {
-                        TabMap[mx + i, my + j] = 'e';
-                    }
-                }
-            }
-        }
-        int px = longueur / 2;
-        int py = largeur / 2;
-        TabMap[px, py] = 'p'; // placement personnage
-        //int pos = Random.Range(1, 5);
-        bool b = true;
-        while (b)
-        {
-            int posx = Random.Range(1, longueur - 1);
-            int posy = Random.Range(1, largeur - 1);
-            if (TabMap[posx, posy] == 'e')
-            {
-                TabMap[posx, posy] = 's';
-                b = false;
-            }
-        }
-        /*b = true;
-        while (b)
-        {
-            int posx = Random.Range(1, longueur - 1);
-            int posy = Random.Range(1, largeur - 1);
-            if (TabMap[posx, posy] == 'e')
-            {
-                TabMap[posx, posy] = 'p';
-                b = false;
-            }
-        }*/
-
-
-
-        for (int i = 0; i < longueur; i++) // creation map
-        {
-            for (int j = 0; j < largeur; j++)
-            {
-                Instantiate(sol, new Vector3(i, -0.5f, j), Quaternion.identity);
-                if (TabMap[i, j] == 'w')
-                {
-                    Instantiate(brick, new Vector3(i, 0, j), Quaternion.identity);
-                }
-                if (TabMap[i, j] == 'p')
-                {
-                    Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
-                }
-                if (TabMap[i, j] == 's')
-                {
-                    Instantiate(exit, new Vector3(i, 0, j), Quaternion.identity);
-                }
-            }
-        }
-    }
+    private char[,] solution;
+    private char[,] gameBoard;
 
     private void a_maze_ing()
     {
@@ -227,7 +95,7 @@ public class Generation_map : MonoBehaviour
         // placement decor
         int nb_element = 0;
         List<List<int>> dec = new List<List<int>>();
-        while (nb_element < 100)
+        while (nb_element < 10)
         {
             int x = Random.Range(0, dungeon_width);
             int y = Random.Range(0, dungeon_length);
@@ -617,9 +485,6 @@ public class Generation_map : MonoBehaviour
 
 
 
-
-
-
         // unperfect maze
         int connec = 0;
         while (connec < 10)
@@ -657,9 +522,6 @@ public class Generation_map : MonoBehaviour
                 }
             }
         }
-
-
-
 
 
         // reduce dead-ends
@@ -739,11 +601,17 @@ public class Generation_map : MonoBehaviour
             }
             dead_ends.RemoveAt(pos);
         }
-
+        
 
         List<int> per = rooms[Random.Range(0, rooms.Count)];
         board[per.ElementAt(0), per.ElementAt(1)] = 'p';
 
+        List<int> en = rooms[Random.Range(0, rooms.Count)];
+        while(en == per)
+        {
+            en = rooms[Random.Range(0, rooms.Count)];
+        }
+        board[en.ElementAt(0), en.ElementAt(1)] = 'a';
 
         // Affichage
 
@@ -759,18 +627,139 @@ public class Generation_map : MonoBehaviour
                 if (board[i, j] == 'p')
                 {
                     Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
-                    Instantiate(camera, new Vector3(i, 6, j - 5), Quaternion.Euler(60,0,0));
+                    Instantiate(light, new Vector3(i, 0, j), Quaternion.identity);
+                    //Instantiate(camera, new Vector3(i, 6, j - 5), Quaternion.Euler(60,0,0));
+                    Instantiate(camera, new Vector3(25, 50, 25), Quaternion.Euler(90, 0, 0));
+                }
+                if (board[i, j] == 'a')
+                {
+                    Instantiate(enemies/*[Random.Range(0, enemies.Length)]*/, new Vector3(i, 0, j), Quaternion.identity);
                 }
             }
         }
         foreach (List<int> deco in dec)
         {
-            if (board[deco.ElementAt(0), deco.ElementAt(1)] == 'e')
+            if (!(board[deco.ElementAt(0) - 1, deco.ElementAt(1)] == 's' || board[deco.ElementAt(0) + 1, deco.ElementAt(1)] == 's' || 
+                board[deco.ElementAt(0), deco.ElementAt(1) - 1] == 's' || board[deco.ElementAt(0), deco.ElementAt(1) + 1] == 's'))
             {
-                Instantiate(decor[Random.Range(0, decor.Length)], new Vector3(deco.ElementAt(0), 0, deco.ElementAt(1)), Quaternion.identity);
-                board[deco.ElementAt(0), deco.ElementAt(1)] = 'd';
+                if (board[deco.ElementAt(0), deco.ElementAt(1)] == 'e')
+                {
+                    Instantiate(decor[Random.Range(0, decor.Length)], new Vector3(deco.ElementAt(0), 0, deco.ElementAt(1)), Quaternion.identity);
+                    board[deco.ElementAt(0), deco.ElementAt(1)] = 'd';
+                }
             }
         }
+        gameBoard = board;
+        //solution = resolution(board);
+
+    }
+
+    public char[,] resolution(char[,] sol, Transform player, Transform enemy)
+    {
+        int en_x = (int)enemy.transform.position.x;
+        int en_y = (int)enemy.transform.position.z;
+        int pl_x = (int)player.transform.position.x;
+        int pl_y = (int)player.transform.position.z;
+
+        sol[en_x, en_y] = 'E';
+        sol[pl_x, pl_y] = 'P';
+
+
+        string[,] temp_board = new string[dungeon_width, dungeon_length];
+        for (int i = 0; i < dungeon_width; i++)
+        {
+            for (int j = 0; j < dungeon_length; j++)
+            {
+                if (sol[i, j] == 'w' || sol[i,j] == 'd')
+                {
+                    temp_board[i, j] = "w";
+                }
+                else
+                {
+                    temp_board[i, j] = "e";
+                }
+            }
+        }
+        //temp_board[depart.ElementAt(0), depart.ElementAt(1)] = "d";
+        temp_board[pl_x, pl_y] = "o";
+
+        int distance = 0;
+        List<List<int>> current = new List<List<int>>();
+        current.Add(new List<int> { en_x, en_y });
+        List<List<int>> next = new List<List<int>>();
+        bool solution = false;
+        while (!solution)
+        {
+            while (current.Count != 0)
+            {
+                int x = current[0].ElementAt(0);
+                int y = current[0].ElementAt(1);
+                if (temp_board[x, y] == "o")
+                {
+                    solution = true;
+                    break;
+                }
+                else if (temp_board[x, y] == "e")
+                {
+                    temp_board[x, y] = Convert.ToString(distance);
+                    next.Add(new List<int> { x + 1, y });
+                    next.Add(new List<int> { x - 1, y });
+                    next.Add(new List<int> { x, y + 1 });
+                    next.Add(new List<int> { x, y - 1 });
+                }
+                current.RemoveAt(0);
+            }
+            distance++;
+            foreach (List<int> pos in next)
+            {
+                current.Add(pos);
+            }
+            next.Clear();
+        }
+        distance--;
+        int x_sol = pl_x;
+        int y_sol = pl_y;
+        while (solution)
+        {
+            string rang = Convert.ToString(distance);
+            if (temp_board[x_sol, y_sol] == "0")
+            {
+                temp_board[x_sol, y_sol] = "d";
+                solution = false;
+            }
+            else
+            {
+                temp_board[x_sol, y_sol] = "c";
+                if (temp_board[x_sol - 1, y_sol] == rang)
+                {
+                    x_sol--;
+                }
+                else if (temp_board[x_sol + 1, y_sol] == rang)
+                {
+                    x_sol++;
+                }
+                else if (temp_board[x_sol, y_sol - 1] == rang)
+                {
+                    y_sol--;
+                }
+                else if (temp_board[x_sol, y_sol + 1] == rang)
+                {
+                    y_sol++;
+                }
+            }
+            distance--;
+        }
+        for (int i = 0; i < dungeon_width; i++)
+        {
+            for (int j = 0; j < dungeon_length; j++)
+            {
+                if (temp_board[i, j] == "c")
+                {
+                    sol[i, j] = 'c';
+                }
+            }
+        }
+        return sol;
     }
 
     public static bool verif(char[,] tab, int a, int b)
@@ -789,13 +778,27 @@ public class Generation_map : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //Isaac();
+        instance = this;
         a_maze_ing();
     }
 
-    // Update is called once per frame
+    public static Generation_map instance;
+    public int turn = 0;
+    
+    
+    
     void Update()
     {
+        if(turn%3 == 2)
+        {
+            temp_enemy_mvt.instance.enemy_Turn(gameBoard, Temp_Perso_mvt.instance.transform);
+        }
+        else
+        {
+            Temp_Perso_mvt.instance.player_turn();
+        }
+
+
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.LoadLevel("Menu0.1");
