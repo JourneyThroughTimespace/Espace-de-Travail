@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class temp_enemy_mvt : MonoBehaviour 
 {
     public static temp_enemy_mvt instance;
-    public int life = 10;
-    public int dmg = 20;
+    public int life = 100;
+    public int dmg = 25;
     
 
 	void Start () 

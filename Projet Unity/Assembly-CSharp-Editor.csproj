@@ -197,28 +197,28 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="ProBuilderCore-Unity5">
- <HintPath>C:/Users/arthur/Documents/GitHub/Espace-de-Travail/Projet Unity/Assets/ProCore/Prototype/Classes/ProBuilderCore-Unity5.dll</HintPath>
+ <HintPath>U:/MAMAJTT/Espace-de-Travail/Projet Unity/Assets/ProCore/Prototype/Classes/ProBuilderCore-Unity5.dll</HintPath>
  </Reference>
  <Reference Include="ProBuilderMeshOps-Unity5">
- <HintPath>C:/Users/arthur/Documents/GitHub/Espace-de-Travail/Projet Unity/Assets/ProCore/Prototype/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
+ <HintPath>U:/MAMAJTT/Espace-de-Travail/Projet Unity/Assets/ProCore/Prototype/Classes/ProBuilderMeshOps-Unity5.dll</HintPath>
  </Reference>
  <Reference Include="ProBuilderEditor-Unity5">
- <HintPath>C:/Users/arthur/Documents/GitHub/Espace-de-Travail/Projet Unity/Assets/ProCore/Prototype/Editor/ProBuilderEditor-Unity5.dll</HintPath>
+ <HintPath>U:/MAMAJTT/Espace-de-Travail/Projet Unity/Assets/ProCore/Prototype/Editor/ProBuilderEditor-Unity5.dll</HintPath>
  </Reference>
  <Reference Include="ProCore">
- <HintPath>C:/Users/arthur/Documents/GitHub/Espace-de-Travail/Projet Unity/Assets/ProCore/Shared/Code/ProCore.dll</HintPath>
+ <HintPath>U:/MAMAJTT/Espace-de-Travail/Projet Unity/Assets/ProCore/Shared/Code/ProCore.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>C:/Users/arthur/Documents/GitHub/Espace-de-Travail/Projet Unity/Assets/temp/Photon Unity Networking/Editor/PhotonNetwork/Newtonsoft.Json.dll</HintPath>
+ <HintPath>U:/MAMAJTT/Espace-de-Travail/Projet Unity/Assets/temp/Photon Unity Networking/Editor/PhotonNetwork/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
- <HintPath>C:/Users/arthur/Documents/GitHub/Espace-de-Travail/Projet Unity/Assets/temp/Plugins/Photon3Unity3D.dll</HintPath>
+ <HintPath>U:/MAMAJTT/Espace-de-Travail/Projet Unity/Assets/temp/Plugins/Photon3Unity3D.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
- <HintPath>C:/Users/arthur/Documents/GitHub/Espace-de-Travail/Projet Unity/Assets/temp/Plugins/Metro/Photon3Unity3D.dll</HintPath>
+ <HintPath>U:/MAMAJTT/Espace-de-Travail/Projet Unity/Assets/temp/Plugins/Metro/Photon3Unity3D.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
- <HintPath>C:/Users/arthur/Documents/GitHub/Espace-de-Travail/Projet Unity/Assets/temp/Plugins/WP8/Photon3Unity3D.dll</HintPath>
+ <HintPath>U:/MAMAJTT/Espace-de-Travail/Projet Unity/Assets/temp/Plugins/WP8/Photon3Unity3D.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>

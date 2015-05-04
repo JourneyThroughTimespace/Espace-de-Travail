@@ -612,13 +612,28 @@ public class Generation_map : MonoBehaviour
             }
             dead_ends.RemoveAt(pos);
         }
-        
 
+        for (int i = 1; i < dungeon_width - 1; i++)
+        {
+            for (int j = 0; j < dungeon_length - 1; j++)
+            {
+                if(board[i,j] == 'e' || board[i,j] == 'l')
+                {
+                    if (board[i + 1, j] == 'w' && board[i - 1, j] == 'w' && board[i, j - 1] == 'w' && board[i, j + 1] == 'w')
+                    {
+                        board[i, j] = 'w';
+                    }
+                }
+            }
+        }
+
+        //int perso_nb = Random.Range(0, rooms.Count);
         List<int> per = rooms[Random.Range(0, rooms.Count)];
+        //rooms.RemoveAt(perso_nb);
         board[per.ElementAt(0), per.ElementAt(1)] = 'p';
-
+        
         List<int> en = rooms[Random.Range(0, rooms.Count)];
-        while(en == per)
+        while(per == en)
         {
             en = rooms[Random.Range(0, rooms.Count)];
         }
@@ -639,6 +654,9 @@ public class Generation_map : MonoBehaviour
                 if (board[i, j] == 'p')
                 {
                     p1 = ((GameObject)Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity)).GetComponent<Temp_Perso_mvt>();
+                    
+                    //perso.transform.Translate(i, 0, j);
+                    //p1 = (GameObject)perso.GetComponent<Temp_Perso_mvt>();
                     //Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
                     //Instantiate(li, new Vector3(i, 0, j), Quaternion.identity);
                     li.transform.Translate(i, j+2, 0);
@@ -776,7 +794,7 @@ public class Generation_map : MonoBehaviour
     
     public void GameOver()
     {
-        Application.LoadLevel("Menu0.1");
+        Application.LoadLevel("Menu0.2");
     }
     
     void Update()
@@ -794,7 +812,7 @@ public class Generation_map : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Escape))
         {
-            Application.LoadLevel("Menu0.1");
+            Application.LoadLevel("Menu0.2");
         }
     }
 }

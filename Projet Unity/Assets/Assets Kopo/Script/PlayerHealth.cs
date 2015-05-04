@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour
     public AudioClip deathClip;
     public float flashSpeed = 5f;
     public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public GameObject HealthUI;
 
 
     Animator anim;
@@ -23,6 +24,8 @@ public class PlayerHealth : MonoBehaviour
 
     void Awake()
     {
+        healthSlider = HealthUI.transform.GetChild(1).gameObject.GetComponent<Slider>();
+        //healthSlider = HealthUI.transform.GetChild(1).slider;
         anim = GetComponent<Animator>();                           
         playerAudio = GetComponent<AudioSource>();
         playerMovement = GetComponent<PlayerMovement>();

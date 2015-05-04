@@ -1,19 +1,34 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Temp_Perso_mvt : MonoBehaviour {
 
     public static Temp_Perso_mvt instance;
     public bool move = false;
-    public int life = 10;
-    public int dmg = 20;
+    public int life = 100;
+    public int dmg = 50;
     public int range = 1;
+    public AudioClip pas;
+    public AudioClip choc;
+    AudioSource audio;
+    AudioSource audio2;
+    public GameObject canvas;
+    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public float flashSpeed = 5f;
+    public Image damageImage;
+    private Slider healthSlider;
+    
 
 
 
     public void LoseLife(int loss)
     {
+        
         life -= loss;
+        GameObject slid = GameObject.Find("HealthSlider");
+        slid.GetComponent<Slider>().value = life;
+        //canvas.transform.GetChild(2).transform.GetChild(1).gameObject.GetComponent <Slider> ().value = life;
         if (life <= 0)
         {
             Generation_map.instance.GameOver();
@@ -22,7 +37,13 @@ public class Temp_Perso_mvt : MonoBehaviour {
 
 	void Start () 
     {
+        Instantiate(canvas);
+        GameObject slid = GameObject.Find("HealthSlider");
+        slid.GetComponent<Slider>().value = life;
+        audio = GetComponent<AudioSource>();
+        audio2 = GetComponent<AudioSource>();
         instance = this;
+
 	}
 
     private void NextLevel()
@@ -52,15 +73,20 @@ public class Temp_Perso_mvt : MonoBehaviour {
                 Light_mvt.instance.light_mvt_up();
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 Generation_map.instance.turn++;
+                audio.PlayOneShot(pas, 0.8F);
+
+
             }
             else if (hit.collider.tag == "Enemy")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 temp_enemy_mvt.instance.LoseLife(dmg);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 Generation_map.instance.turn++;
             }
             else if (hit.collider.tag == "blocking")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 Destroy(hit.collider.gameObject);
                 Generation_map.instance.gameBoard[(int)transform.position.x, (int)transform.position.z + 1] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
@@ -68,6 +94,7 @@ public class Temp_Perso_mvt : MonoBehaviour {
             }
             else if (hit.collider.tag == "Exit")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 Application.LoadLevel(Application.loadedLevel);
             }
         }
@@ -77,20 +104,24 @@ public class Temp_Perso_mvt : MonoBehaviour {
             Physics.Raycast(transform.position, lef, out hit, 1);
             if (!Physics.Raycast(transform.position, lef, 1))
             {
+                
                 Camera_mvt.instance.Cam_mvt_left();
                 transform.Translate(Vector3.left);
                 Light_mvt.instance.light_mvt_left();
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
                 Generation_map.instance.turn++;
+                audio.PlayOneShot(pas, 0.8F);
             }
             else if (hit.collider.tag == "Enemy")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 temp_enemy_mvt.instance.LoseLife(dmg);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
                 Generation_map.instance.turn++;
             }
             else if (hit.collider.tag == "blocking")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 Destroy(hit.collider.gameObject);
                 Generation_map.instance.gameBoard[(int)transform.position.x - 1, (int)transform.position.z] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
@@ -108,15 +139,18 @@ public class Temp_Perso_mvt : MonoBehaviour {
                 Light_mvt.instance.light_mvt_down();
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
                 Generation_map.instance.turn++;
+                audio.PlayOneShot(pas, 0.8F);
             }
             else if (hit.collider.tag == "Enemy")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 temp_enemy_mvt.instance.LoseLife(dmg);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
                 Generation_map.instance.turn++;
             }
             else if (hit.collider.tag == "blocking")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 Destroy(hit.collider.gameObject);
                 Generation_map.instance.gameBoard[(int)transform.position.x, (int)transform.position.z - 1] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
@@ -134,15 +168,18 @@ public class Temp_Perso_mvt : MonoBehaviour {
                 Light_mvt.instance.light_mvt_right();
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 Generation_map.instance.turn++;
+                audio.PlayOneShot(pas, 0.8F);
             }
             else if (hit.collider.tag == "Enemy")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 temp_enemy_mvt.instance.LoseLife(dmg);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 Generation_map.instance.turn++;
             }
             else if (hit.collider.tag == "blocking")
             {
+                audio2.PlayOneShot(choc, 0.8F);
                 Destroy(hit.collider.gameObject);
                 Generation_map.instance.gameBoard[(int)transform.position.x + 1, (int)transform.position.z] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
