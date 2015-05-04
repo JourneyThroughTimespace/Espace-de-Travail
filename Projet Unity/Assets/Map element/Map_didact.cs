@@ -8,9 +8,12 @@ public class Map_didact : MonoBehaviour
 
     public GameObject brick;
     public GameObject perso;
-    public GameObject enemy;
+    public GameObject[] enemy;
     public GameObject sol;
     public GameObject sortie;
+    public GameObject camera;
+    public GameObject light;
+
 
     didact_Player p1;
     didact_Enemy en;
@@ -20,7 +23,7 @@ public class Map_didact : MonoBehaviour
     public void GameOver()
     {
         //enabled = false;
-        Application.LoadLevel("Menu0.1");
+        Application.LoadLevel("Menu0.2");
     }
 
     void Awake()
@@ -36,7 +39,7 @@ public class Map_didact : MonoBehaviour
                 
                 if (x == 19 && y == 20)
                 {
-                    Instantiate(sortie, new Vector3(x, 0, y), Quaternion.identity);
+                    Instantiate(sortie, new Vector3(x, 0, y), Quaternion.Euler(0,90,0));
                 }
                 else if (x == 0 || x == 20 || y == 0 || y == 20)
                 {
@@ -46,8 +49,10 @@ public class Map_didact : MonoBehaviour
         }
         Instantiate(sol, new Vector3(10, -0.5f, 10), Quaternion.identity);
         p1 = ((GameObject)Instantiate(perso, new Vector3(10, 0, 3), Quaternion.identity)).GetComponent<didact_Player>();
-        en = ((GameObject)Instantiate(enemy, new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<didact_Enemy>(); 
+        en = ((GameObject)Instantiate(enemy[Random.Range(0,enemy.Length)], new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<didact_Enemy>();
+        light.transform.Translate(0, 0, 0);
     }
+
 
     public void change_state(int t)
     {
@@ -63,7 +68,7 @@ public class Map_didact : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            Application.LoadLevel("Menu0.1");
+            Application.LoadLevel("Menu0.2");
         }
         if ( game_state <= 1)
         {

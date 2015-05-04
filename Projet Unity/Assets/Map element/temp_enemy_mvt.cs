@@ -44,61 +44,61 @@ public class temp_enemy_mvt : MonoBehaviour
         if (dir == "right")
         {
             RaycastHit hit;
-            bool b = Physics.Raycast(transform.position, rig, out hit, 1);
+            Physics.Raycast(transform.position, rig, out hit, 1);
             if (!Physics.Raycast(transform.position, rig, 1))
             {
                 transform.Translate(Vector3.right);
-                //Generation_map.instance.turn++;
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
             }
             else if (hit.collider.tag == "Player")
             {
                 Temp_Perso_mvt.instance.LoseLife(dmg);
-                //Generation_map.instance.turn++;
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
             }
         }
         else if (dir == "left")
         {
             RaycastHit hit;
-            bool b = Physics.Raycast(transform.position, lef, out hit, 1);
+            Physics.Raycast(transform.position, lef, out hit, 1);
             if (!Physics.Raycast(transform.position, lef, 1))
             {
                 transform.Translate(Vector3.left);
-                //Generation_map.instance.turn++;
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
             }
             else if (hit.collider.tag == "Player")
             {
                 Temp_Perso_mvt.instance.LoseLife(dmg);
-                //Generation_map.instance.turn++;
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
             }
         }
         else if (dir == "forward")
         {
             RaycastHit hit;
-            bool b = Physics.Raycast(transform.position, fwd, out hit, 1);
+            Physics.Raycast(transform.position, fwd, out hit, 1);
             if (!Physics.Raycast(transform.position, fwd, 1))
             {
                 transform.Translate(Vector3.forward);
-                //Generation_map.instance.turn++;
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
             }
             else if (hit.collider.tag == "Player")
             {
                 Temp_Perso_mvt.instance.LoseLife(dmg);
-                //Generation_map.instance.turn++;
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
             }
         }
         else
         {
             RaycastHit hit;
-            bool b = Physics.Raycast(transform.position, bac, out hit, 1);
+            Physics.Raycast(transform.position, bac, out hit, 1);
             if (!Physics.Raycast(transform.position, bac, 1))
             {
                 transform.Translate(Vector3.back);
-                //Generation_map.instance.turn++;
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
             }
             else if (hit.collider.tag == "Player")
             {
                 Temp_Perso_mvt.instance.LoseLife(dmg);
-                //Generation_map.instance.turn++;
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
             }
         }
         Generation_map.instance.turn++;

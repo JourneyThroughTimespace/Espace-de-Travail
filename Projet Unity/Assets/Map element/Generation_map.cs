@@ -18,9 +18,10 @@ public class Generation_map : MonoBehaviour
     public GameObject exit;
     public GameObject[] decor;
     public GameObject camera;
-    public GameObject enemies;
+    public GameObject[] enemies;
+    
     //public GameObject light;
-    public Light light;
+    public Transform li;
 
     Temp_Perso_mvt p1;
     temp_enemy_mvt enem;
@@ -33,7 +34,7 @@ public class Generation_map : MonoBehaviour
     public int density_room = 80;
 
     private char[,] solution;
-    private char[,] gameBoard;
+    public char[,] gameBoard;
 
     private void a_maze_ing()
     {
@@ -94,6 +95,12 @@ public class Generation_map : MonoBehaviour
                     }
                 }
             }
+        }
+        // placement sortie
+        List<int> sortie = rooms[Random.Range(0, rooms.Count)];
+        while(board[sortie.ElementAt(0),sortie.ElementAt(1)] == 'r')
+        {
+            sortie[1]++;
         }
 
         // placement decor
@@ -617,6 +624,7 @@ public class Generation_map : MonoBehaviour
         }
         board[en.ElementAt(0), en.ElementAt(1)] = 'a';
 
+        board[sortie[0], sortie[1]] = 'o';
         // Affichage
 
         for (int i = 0; i < dungeon_width; i++)
@@ -632,14 +640,20 @@ public class Generation_map : MonoBehaviour
                 {
                     p1 = ((GameObject)Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity)).GetComponent<Temp_Perso_mvt>();
                     //Instantiate(perso, new Vector3(i, 0, j), Quaternion.identity);
-                    Instantiate(light, new Vector3(i, 0, j), Quaternion.identity);
-                    //Instantiate(camera, new Vector3(i, 6, j - 5), Quaternion.Euler(60,0,0));
-                    Instantiate(camera, new Vector3(25, 50, 25), Quaternion.Euler(90, 0, 0));
+                    //Instantiate(li, new Vector3(i, 0, j), Quaternion.identity);
+                    li.transform.Translate(i, j+2, 0);
+                    
+                    Instantiate(camera, new Vector3(i, 6, j - 4), Quaternion.Euler(60,0,0));
+                    //Instantiate(camera, new Vector3(25, 50 , 25), Quaternion.Euler(90, 0, 0));
                 }
                 if (board[i, j] == 'a')
                 {
-                    enem = ((GameObject)Instantiate(enemies, new Vector3(i, 0, j), Quaternion.identity)).GetComponent<temp_enemy_mvt>();
+                    enem = ((GameObject)Instantiate(enemies[Random.Range(0,enemies.Length)], new Vector3(i, 0, j), Quaternion.identity)).GetComponent<temp_enemy_mvt>();
                     //Instantiate(enemies/*[Random.Range(0, enemies.Length)]*/, new Vector3(i, 0, j), Quaternion.identity);
+                }
+                if (board[i, j] == 'o')
+                {
+                    Instantiate(exit, new Vector3(i, 0, j),Quaternion.Euler(0,90,0));
                 }
             }
         }
@@ -770,6 +784,7 @@ public class Generation_map : MonoBehaviour
         if(turn % 3 == 2)
         {
             enem.enemy_Turn(gameBoard, p1.transform);
+            //turn++;
         }
         else
         {
