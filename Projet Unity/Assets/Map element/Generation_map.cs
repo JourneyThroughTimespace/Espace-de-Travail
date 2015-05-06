@@ -787,8 +787,14 @@ public class Generation_map : MonoBehaviour
 
     void Start()
     {
+        p1 = null;
+        enem = null;
         instance = this;
         a_maze_ing();
+        if(p1 == null || enem == null)
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
     }
 
     

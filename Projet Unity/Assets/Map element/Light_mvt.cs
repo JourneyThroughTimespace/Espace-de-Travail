@@ -19,18 +19,26 @@ public class Light_mvt : MonoBehaviour
     }
     public void light_mvt_up()
     {
+        transform.Rotate(5, 0, 0);
         transform.Translate(Vector3.up);
+        transform.Rotate(-5, 0, 0);
     }
     public void light_mvt_left()
     {
+        transform.Rotate(5, 0, 0);
         transform.Translate(Vector3.left);
+        transform.Rotate(-5, 0, 0);
     }
     public void light_mvt_down()
     {
+        transform.Rotate(5, 0, 0);
         transform.Translate(Vector3.down);
+        transform.Rotate(-5, 0, 0);
     }
     public void light_mvt_right()
     {
+        transform.Rotate(5, 0, 0);
         transform.Translate(Vector3.right);
+        transform.Rotate(-5, 0, 0);
     }
 }
