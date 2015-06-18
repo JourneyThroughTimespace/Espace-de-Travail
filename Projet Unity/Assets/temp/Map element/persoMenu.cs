@@ -52,7 +52,7 @@ public class persoMenu : MonoBehaviour {
         if (Input.GetKeyDown("w"))// && !Physics.Raycast(transform.position, fwd, 1))
         {
             RaycastHit hit;
-            bool b = Physics.Raycast(transform.position, fwd, out hit, 1);
+            Physics.Raycast(transform.position, fwd, out hit, 1);
             if (!Physics.Raycast(transform.position, fwd, 1))
             {
                 audio.PlayOneShot(pas, 0.8F);
@@ -218,7 +218,7 @@ public class persoMenu : MonoBehaviour {
             //transform.Translate(Vector3.left);
             //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
             RaycastHit hit;
-            bool b = Physics.Raycast(transform.position, lef, out hit, 1);
+            Physics.Raycast(transform.position, lef, out hit, 1);
             if (!Physics.Raycast(transform.position, lef, 1))
             {
                 audio.PlayOneShot(pas, 0.8F);
@@ -381,7 +381,7 @@ public class persoMenu : MonoBehaviour {
             //transform.Translate(Vector3.back);
             //Map_didact.instance.change_state(M_didact.instance.game_state + 1);
             RaycastHit hit;
-            bool b = Physics.Raycast(transform.position, bac, out hit, 1);
+            Physics.Raycast(transform.position, bac, out hit, 1);
             if (!Physics.Raycast(transform.position, bac, 1))
             {
                 audio.PlayOneShot(pas, 0.8F);
@@ -544,7 +544,7 @@ public class persoMenu : MonoBehaviour {
             //transform.Translate(Vector3.right);
             //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
             RaycastHit hit;
-            bool b = Physics.Raycast(transform.position, rig, out hit, 1);
+            Physics.Raycast(transform.position, rig, out hit, 1);
             if (!Physics.Raycast(transform.position, rig, 1))
             {
                 audio.PlayOneShot(pas, 0.8F);

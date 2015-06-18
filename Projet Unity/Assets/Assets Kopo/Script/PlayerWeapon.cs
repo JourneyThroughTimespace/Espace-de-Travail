@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerWeapon : MonoBehaviour {
 
-    public int Damage;
+    /*public int Damage;
     public int Range;
     //public Text weaponName;
     public Text weaponName = GameObject.Find("HudCanvas").getComponent("WeaponName");
@@ -20,5 +20,5 @@ public class PlayerWeapon : MonoBehaviour {
         {
             weaponName.text = "Rifle";
         }
-    }
+    }*/
 }
