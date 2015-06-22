@@ -8,21 +8,24 @@ public class Map_didact : MonoBehaviour
 
     public GameObject brick;
     public GameObject perso;
-    public GameObject[] enemy;
+    //public GameObject[] enemy;
+    public GameObject arme;
+    public GameObject enemy;
     public GameObject sol;
     public GameObject sortie;
     public GameObject camera;
     public GameObject light;
 
 
-    didact_Player p1;
-    didact_Enemy en;
+    _Player p1;
+    _Enemy en;
+    _Weapon dague;
 
     //int level = 1;
     public int game_state = 0;
     public void GameOver()
     {
-        //enabled = false;
+        //panneau mort a faire
         Application.LoadLevel("Menu0.2");
     }
 
@@ -48,8 +51,9 @@ public class Map_didact : MonoBehaviour
             }
         }
         Instantiate(sol, new Vector3(10, -0.5f, 10), Quaternion.identity);
-        p1 = ((GameObject)Instantiate(perso, new Vector3(10, 0, 3), Quaternion.identity)).GetComponent<didact_Player>();
-        en = ((GameObject)Instantiate(enemy[Random.Range(0,enemy.Length)], new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<didact_Enemy>();
+        p1 = ((GameObject)Instantiate(perso, new Vector3(10, 0, 3), Quaternion.identity)).GetComponent<_Player>();
+        en = ((GameObject)Instantiate(enemy/*[Random.Range(0,enemy.Length)]*/, new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<_Enemy>();
+        dague = ((GameObject)Instantiate(arme, new Vector3(10, 0, 2), Quaternion.identity)).GetComponent<_Weapon>();
         light.transform.Translate(0, 0, 0);
     }
 
@@ -72,11 +76,11 @@ public class Map_didact : MonoBehaviour
         }
         if ( game_state <= 1)
         {
-            p1.TurnUpdate();
+            p1.turnUpdate();
         }
         if (game_state == 2)
         {
-            en.TurnUpdate(p1.transform);
+            en.turnUpdate(p1.transform);
         }
     }
 
