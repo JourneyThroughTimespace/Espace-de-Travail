@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 
 public class Generation_map : MonoBehaviour
 {
-
     public static Generation_map instance;
     public int turn = 0;
 

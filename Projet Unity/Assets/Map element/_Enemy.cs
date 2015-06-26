@@ -23,4 +23,5 @@ public abstract class _Enemy : _Entity
     }
 
     public abstract void turnUpdate(Transform target);
+
 }

@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class _Player : _Entity
+public class _MapPlayer : _Entity
 {
+
     public int l;
     public int d;
     public int r;
-    public static _Player instance;
+    public static _MapPlayer instance;
 
     public override void LoseLife(int loss)
     {
@@ -18,15 +19,18 @@ public class _Player : _Entity
         l = life;
     }
 
-	void Start () 
+    void Start()
     {
         life = l;
         dmg = d;
         range = r;
+        //l = life;
+        //d = dmg;
+        //r = range;
         instance = this;
-        //DontDestroyOnLoad(transform.gameObject);
-	}
-    
+        DontDestroyOnLoad(transform.gameObject);
+    }
+
 
 
 
@@ -34,25 +38,24 @@ public class _Player : _Entity
     {
         if (Input.GetKeyDown("w"))
         {
-            move_forward();
-            _BoardDiadact.instance.change_State();
+            move_forward();     
         }
         else if (Input.GetKeyDown("a"))
         {
             move_left();
-            _BoardDiadact.instance.change_State();
+            //_BoardGame.instance.change_State();
         }
         else if (Input.GetKeyDown("s"))
         {
             move_back();
-            _BoardDiadact.instance.change_State();
+            //_BoardGame.instance.change_State();
         }
         else if (Input.GetKeyDown("d"))
         {
             move_right();
-            _BoardDiadact.instance.change_State();
+            //_BoardGame.instance.change_State();
         }
-        
+
     }
 
     private void move_forward()
@@ -66,7 +69,8 @@ public class _Player : _Entity
             //audio.PlayOneShot(pas, 0.8F);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
             transform.Translate(Vector3.forward);
-            
+            _BoardGame.instance.change_State();
+            Camera_mvt.instance.Cam_mvt_up();
         }
         else if (hit.collider.tag == "Enemy")
         {
@@ -75,7 +79,7 @@ public class _Player : _Entity
             e.LoseLife(dmg);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
             //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
-            
+            _BoardGame.instance.change_State();
         }
         else
         {
@@ -85,23 +89,26 @@ public class _Player : _Entity
                 //audio.PlayOneShot(pas, 0.8F);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 transform.Translate(Vector3.forward);
-                
+                _BoardGame.instance.change_State();
+                Camera_mvt.instance.Cam_mvt_up();
             }
             else if (hit.collider.tag == "Exit")
             {
                 //audio2.PlayOneShot(choc, 0.8F);
                 _GameManager.instance.player.set_life(10);
                 _GameManager.niveau++;
-                transform.Translate(100, 0, 160);
+                //Destroy(gameObject);
+                _GameManager.instance.player = this;
                 gameObject.SetActive(false);
-                _BoardDiadact.instance.next_level();
+                _BoardGame.instance.next_level();
             }
             else if (hit.collider.tag == "blocking")
             {
                 //audio2.PlayOneShot(choc, 0.8F);
                 Destroy(hit.collider.gameObject);
+                _BoardGame.instance.gameBoard[(int)transform.position.x, (int)transform.position.z + 1] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
-                
+                _BoardGame.instance.change_State();
             }
             else if (hit.collider.tag == "Weapon")
             {
@@ -110,8 +117,9 @@ public class _Player : _Entity
                 set_dmg(hit.collider.GetComponent<_Weapon>().dmg);
                 set_range(hit.collider.GetComponent<_Weapon>().range);
                 hit.collider.gameObject.SetActive(false);
+                _BoardGame.instance.gameBoard[(int)transform.position.x, (int)transform.position.z + 1] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
-                
+                _BoardGame.instance.change_State();
             }
         }
     }
@@ -127,7 +135,8 @@ public class _Player : _Entity
             //audio.PlayOneShot(pas, 0.8F);
             transform.Translate(Vector3.left);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
-            
+            _BoardGame.instance.change_State();
+            Camera_mvt.instance.Cam_mvt_left();
         }
         else if (hit.collider.tag == "Enemy")
         {
@@ -135,7 +144,7 @@ public class _Player : _Entity
             _Enemy e = hit.collider.gameObject.GetComponent<_Enemy>();
             e.LoseLife(dmg);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
-            
+            _BoardGame.instance.change_State();
         }
         else
         {
@@ -145,14 +154,16 @@ public class _Player : _Entity
                 //audio.PlayOneShot(pas, 0.8F);
                 transform.Translate(Vector3.left);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
-                
+                _BoardGame.instance.change_State();
+                Camera_mvt.instance.Cam_mvt_left();
             }
             else if (hit.collider.tag == "blocking")
             {
                 //audio2.PlayOneShot(choc, 0.8F);
                 Destroy(hit.collider.gameObject);
+                _BoardGame.instance.gameBoard[(int)transform.position.x - 1, (int)transform.position.z] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
-                
+                _BoardGame.instance.change_State();
             }
             else if (hit.collider.tag == "Weapon")
             {
@@ -161,8 +172,9 @@ public class _Player : _Entity
                 set_dmg(hit.collider.GetComponent<_Weapon>().dmg);
                 set_range(hit.collider.GetComponent<_Weapon>().range);
                 hit.collider.gameObject.SetActive(false);
+                _BoardGame.instance.gameBoard[(int)transform.position.x - 1, (int)transform.position.z] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
-                
+                _BoardGame.instance.change_State();
             }
         }
     }
@@ -178,7 +190,8 @@ public class _Player : _Entity
             //audio.PlayOneShot(pas, 0.8F);
             transform.Translate(Vector3.back);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
-            
+            _BoardGame.instance.change_State();
+            Camera_mvt.instance.Cam_mvt_down();
         }
         else if (hit.collider.tag == "Enemy")
         {
@@ -186,7 +199,7 @@ public class _Player : _Entity
             _Enemy e = hit.collider.gameObject.GetComponent<_Enemy>();
             e.LoseLife(dmg);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
-            
+            _BoardGame.instance.change_State();
         }
         else
         {
@@ -196,14 +209,16 @@ public class _Player : _Entity
                 //audio.PlayOneShot(pas, 0.8F);
                 transform.Translate(Vector3.back);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
-                
+                _BoardGame.instance.change_State();
+                Camera_mvt.instance.Cam_mvt_down();
             }
             else if (hit.collider.tag == "blocking")
             {
                 //audio2.PlayOneShot(choc, 0.8F);
                 Destroy(hit.collider.gameObject);
+                _BoardGame.instance.gameBoard[(int)transform.position.x, (int)transform.position.z - 1] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
-                
+                _BoardGame.instance.change_State();
             }
             else if (hit.collider.tag == "Weapon")
             {
@@ -211,8 +226,9 @@ public class _Player : _Entity
                 set_dmg(hit.collider.GetComponent<_Weapon>().dmg);
                 set_range(hit.collider.GetComponent<_Weapon>().range);
                 hit.collider.gameObject.SetActive(false);
+                _BoardGame.instance.gameBoard[(int)transform.position.x, (int)transform.position.z - 1] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
-                
+                _BoardGame.instance.change_State();
             }
         }
     }
@@ -228,7 +244,8 @@ public class _Player : _Entity
             //audio.PlayOneShot(pas, 0.8F);
             transform.Translate(Vector3.right);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
-            
+            _BoardGame.instance.change_State();
+            Camera_mvt.instance.Cam_mvt_right();
         }
         else if (hit.collider.tag == "Enemy")
         {
@@ -236,7 +253,7 @@ public class _Player : _Entity
             _Enemy e = hit.collider.gameObject.GetComponent<_Enemy>();
             e.LoseLife(dmg);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
-            
+            _BoardGame.instance.change_State();
         }
         else
         {
@@ -246,14 +263,16 @@ public class _Player : _Entity
                 //audio.PlayOneShot(pas, 0.8F);
                 transform.Translate(Vector3.right);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
-                
+                _BoardGame.instance.change_State();
+                Camera_mvt.instance.Cam_mvt_right();
             }
             else if (hit.collider.tag == "blocking")
             {
-               // audio2.PlayOneShot(choc, 0.8F);
+                // audio2.PlayOneShot(choc, 0.8F);
                 Destroy(hit.collider.gameObject);
+                _BoardGame.instance.gameBoard[(int)transform.position.x + 1, (int)transform.position.z] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
-                
+                _BoardGame.instance.change_State();
             }
             else if (hit.collider.tag == "Weapon")
             {
@@ -261,7 +280,9 @@ public class _Player : _Entity
                 set_dmg(hit.collider.GetComponent<_Weapon>().dmg);
                 set_range(hit.collider.GetComponent<_Weapon>().range);
                 hit.collider.gameObject.SetActive(false);
+                _BoardGame.instance.gameBoard[(int)transform.position.x + 1, (int)transform.position.z] = 'e';
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
+                _BoardGame.instance.change_State();
             }
         }
     }
@@ -269,7 +290,6 @@ public class _Player : _Entity
 
     private void ReturnMenu()
     {
-        life = 10;
         l = 10;
         Application.LoadLevel("Menu0.2");
     }

@@ -1,54 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class _didactEnemyRange : _Enemy 
+public class _MapEnemy : _Enemy
 {
-    
-
-	void Start () 
+    public override void turnUpdate(Transform target)
     {
-        life = 10;
-        dmg = 2;
-        range = 3;
-	}
-	
-	
-	void Update () 
-    {
-	
-	} 
-
-
-    public override void turnUpdate(Transform Target)
-    {
-        float px = transform.position.x - Target.position.x;
-        float pz = transform.position.z - Target.position.z;
-        if ((px <= range && px > 1 || px < -1 || px >= -range) && (pz > 0 && pz < range))
+        string s = _BoardGame.instance.solve(_BoardGame.instance.gameBoard, target.transform, transform, range);
+        if (s != "null")
         {
-            move_back();
+            if (s == "right")
+            {
+                move_right();
+            }
+            else if (s == "left")
+            {
+                move_left();
+            }
+            else if (s == "forward")
+            {
+                move_forward();
+            }
+            else
+            {
+                move_back();
+            }
         }
-        else if ((px <= range && px > 1 || px < -1 || px >= -range) && (pz < 0 && pz > -range))
-        {
-            move_forward();
-        }
-        else if (Target.position.x > transform.position.x)
-        {
-            move_right();
-        }
-        else if (Target.position.x < transform.position.x)
-        {
-            move_left();
-        }
-        else if (Target.position.z > transform.position.z)
-        {
-            move_forward();
-        }
-        else
-        {
-            move_back();
-        }
+        
     }
-
     private void move_forward()
     {
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
@@ -153,4 +131,18 @@ public class _didactEnemyRange : _Enemy
             }
         }
     }
+    
+
+
+	// Use this for initialization
+	void Start () 
+    {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () 
+    {
+	
+	}
 }

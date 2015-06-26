@@ -16,6 +16,7 @@ public class _BoardDiadact : MonoBehaviour
     private int game_State;
 
 
+
     _Enemy en;
     _Player p1;
 
@@ -23,9 +24,10 @@ public class _BoardDiadact : MonoBehaviour
 
 	void Start () 
     {
-        game_State = 0;
         map(_GameManager.niveau);
         instance = this;
+        game_State = 0;
+        //DontDestroyOnLoad(transform.gameObject);
 	}
    
 
@@ -39,7 +41,8 @@ public class _BoardDiadact : MonoBehaviour
         if (n == 2)
         {
             _GameManager.instance.set_niv(0);
-            _GameManager.instance.player.l = 10;
+            _GameManager.instance.player.set_life(10); // changement verif si marche encore
+            //Destroy(gameObject);
             Application.LoadLevel("Menu0.2");
         }
         else
@@ -60,15 +63,21 @@ public class _BoardDiadact : MonoBehaviour
                 }
             }
             Instantiate(sol, new Vector3(10, -0.5f, 10), Quaternion.identity);
-            p1 = ((GameObject)Instantiate(player, new Vector3(10, 0, 3), Quaternion.identity)).GetComponent<_Player>();
-            p1.set_life(_GameManager.instance.player.get_life());
+
+            
 
             if (n == 0)
             {
                 en = ((GameObject)Instantiate(enemy1, new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<_Enemy>();
+                p1 = ((GameObject)Instantiate(player, new Vector3(10, 0, 3), Quaternion.identity)).GetComponent<_Player>();
+                p1.set_life(_GameManager.instance.player.get_life());
             }
             else
             {
+                //p1 = GameObject.FindGameObjectWithTag("Player").GetComponent<_Player>();
+                p1 = ((GameObject)Instantiate(player, new Vector3(10, 0, 3), Quaternion.identity)).GetComponent<_Player>();
+                p1.set_life(_GameManager.instance.player.get_life());
+                _GameManager.instance.player = p1;
                 en = ((GameObject)Instantiate(enemy2, new Vector3(10, 0, 17), Quaternion.identity)).GetComponent<_Enemy>();
             }
             light.transform.Translate(0, 0, 0);
@@ -79,7 +88,7 @@ public class _BoardDiadact : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            _GameManager.instance.player.l = 10;
+            _GameManager.instance.player.set_life(10);
             Application.LoadLevel("Menu0.2");
         }
         if (game_State % 3 <= 1)
