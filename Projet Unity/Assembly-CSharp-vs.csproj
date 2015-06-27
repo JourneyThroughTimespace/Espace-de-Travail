@@ -83,6 +83,7 @@
      <Compile Include="Assets\Map element\_Entity.cs" />
      <Compile Include="Assets\Map element\_GameManager.cs" />
      <Compile Include="Assets\Map element\_MapEnemy.cs" />
+     <Compile Include="Assets\Map element\_MapGameManager.cs" />
      <Compile Include="Assets\Map element\_MapPlayer.cs" />
      <Compile Include="Assets\Map element\_Player.cs" />
      <Compile Include="Assets\Map element\_didactEnemy.cs" />

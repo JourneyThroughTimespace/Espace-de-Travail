@@ -5,6 +5,7 @@ public class _GameManager : MonoBehaviour
 {
     public _Entity player;
     public static int niveau;
+    
 
     public int get_niv()
     {

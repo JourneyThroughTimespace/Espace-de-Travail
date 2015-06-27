@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 public class _BoardGame : MonoBehaviour 
 {
     public static _BoardGame instance;
-    public int turn = 0;
 
     public GameObject brick;
     public GameObject perso;
@@ -26,7 +25,7 @@ public class _BoardGame : MonoBehaviour
     _MapPlayer p1;
     List<_Enemy> enemies = new List<_Enemy>();
 
-    private int game_State;
+    public int game_State;
 
     public int min_room_size = 5;
     public int max_room_size = 10;
@@ -693,23 +692,24 @@ public class _BoardGame : MonoBehaviour
                 }
             }
         }
+        //Instantiate(camera, new Vector3(per.ElementAt(0), 6, per.ElementAt(1) - 4), Quaternion.Euler(60, 0, 0));
         if (n == 0)
         {
             p1 = ((GameObject)Instantiate(perso, new Vector3(per.ElementAt(0), 0, per.ElementAt(1)), Quaternion.identity)).GetComponent<_MapPlayer>();
-            
+            Instantiate(camera, new Vector3(per.ElementAt(0), 6, per.ElementAt(1) - 4), Quaternion.Euler(60, 0, 0));
+            //camera.transform.Translate(per.ElementAt(0), 6, per.ElementAt(1) - 4);
         }
         else
         {
             p1 = ((GameObject)Instantiate(perso, new Vector3(per.ElementAt(0), 0, per.ElementAt(1)), Quaternion.identity)).GetComponent<_MapPlayer>();
-            //camera.transform.Translate(per.ElementAt(0) - p1.transform.position.x, 0, per.ElementAt(1) - p1.transform.position.z);
+            //camera.transform.Translate(per.ElementAt(0) - camera.transform.position.x, 6, per.ElementAt(1) - camera.transform.position.z);
+            Instantiate(camera, new Vector3(per.ElementAt(0), 6, per.ElementAt(1) - 4), Quaternion.Euler(60, 0, 0));
             p1.set_life(_GameManager.instance.player.get_life());
             p1.set_dmg(_GameManager.instance.player.get_dmg());
             p1.set_range(_GameManager.instance.player.get_range());
-            //p1 = GameObject.FindGameObjectWithTag("Player").GetComponent<_MapPlayer>();
-            //p1.transform.Translate(per.ElementAt(0) - p1.transform.position.x, 0, per.ElementAt(1) - p1.transform.position.z);
         }
         li.transform.Translate(per.ElementAt(0), per.ElementAt(1) + 2, 0);
-        Instantiate(camera, new Vector3(per.ElementAt(0), 6, per.ElementAt(1) - 4), Quaternion.Euler(60, 0, 0));
+        
 
         foreach (List<int> en in enem)
         {
@@ -867,7 +867,12 @@ public class _BoardGame : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            Application.Quit();
+            p1.gameObject.SetActive(false);
+            _GameManager.niveau = 0;
+            _GameManager.instance.player.set_life(10);
+            _GameManager.instance.player.set_dmg(5);
+            _GameManager.instance.player.set_range(1);
+            Application.LoadLevel("Menu0.2");
         }
         if (game_State % 3 <= 1)
         {

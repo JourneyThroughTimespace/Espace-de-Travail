@@ -10,7 +10,6 @@ public class Camera_mvt : MonoBehaviour
 	void Start () 
     {
         instance = this;
-        DontDestroyOnLoad(gameObject);
 	}
 	
 	// Update is called once per frame

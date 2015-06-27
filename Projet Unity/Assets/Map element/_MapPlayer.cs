@@ -28,7 +28,7 @@ public class _MapPlayer : _Entity
         //d = dmg;
         //r = range;
         instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
 
@@ -68,6 +68,9 @@ public class _MapPlayer : _Entity
             transform.Translate(Vector3.forward);
             _BoardGame.instance.change_State();
             Camera_mvt.instance.Cam_mvt_up();
+            /*_BoardGame.instance.camera.transform.Rotate(30, 0, 0);
+            _BoardGame.instance.camera.transform.Translate(Vector3.up);
+            _BoardGame.instance.camera.transform.Rotate(-30, 0, 0);*/
         }
         else if (hit.collider.tag == "Enemy")
         {
@@ -88,6 +91,9 @@ public class _MapPlayer : _Entity
                 transform.Translate(Vector3.forward);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_up();
+                /*_BoardGame.instance.camera.transform.Rotate(30, 0, 0);
+                _BoardGame.instance.camera.transform.Translate(Vector3.up);
+                _BoardGame.instance.camera.transform.Rotate(-30, 0, 0);*/
             }
             else if (hit.collider.tag == "Exit")
             {
@@ -96,10 +102,9 @@ public class _MapPlayer : _Entity
                 _GameManager.instance.player.set_dmg(dmg);
                 _GameManager.instance.player.set_range(range);
                 gameObject.SetActive(false);
+                //_MapGameManager.instance.cam.gameObject.SetActive(false);
+                Destroy(_MapGameManager.instance.gameObject);
                 //_BoardGame.instance.camera.SetActive(false);
-                //Destroy(gameObject);
-                //_GameManager.instance.player = this;
-                //gameObject.SetActive(false);
                 _BoardGame.instance.next_level();
             }
             else if (hit.collider.tag == "blocking")
