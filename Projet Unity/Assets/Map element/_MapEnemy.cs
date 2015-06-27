@@ -41,7 +41,7 @@ public class _MapEnemy : _Enemy
         else if (hit.collider.tag == "Player")
         {
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
-            _Player p = hit.collider.gameObject.GetComponent<_Player>();
+            _MapPlayer p = hit.collider.gameObject.GetComponent<_MapPlayer>();
             p.LoseLife(dmg);
         }
         else if (hit.collider.tag == "Wall" || hit.collider.tag == "Enemy" || hit.collider.tag == "blocking")
@@ -66,7 +66,7 @@ public class _MapEnemy : _Enemy
         }
         else if (hit.collider.tag == "Player")
         {
-            _Player p = hit.collider.gameObject.GetComponent<_Player>();
+            _MapPlayer p = hit.collider.gameObject.GetComponent<_MapPlayer>();
             p.LoseLife(dmg);
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
         }
@@ -93,7 +93,7 @@ public class _MapEnemy : _Enemy
         else if (hit.collider.tag == "Player")
         {
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
-            _Player p = hit.collider.gameObject.GetComponent<_Player>();
+            _MapPlayer p = hit.collider.gameObject.GetComponent<_MapPlayer>();
             p.LoseLife(dmg);
         }
         else if (hit.collider.tag == "Wall" || hit.collider.tag == "Enemy" || hit.collider.tag == "blocking")
@@ -119,7 +119,7 @@ public class _MapEnemy : _Enemy
         else if (hit.collider.tag == "Player")
         {
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
-            _Player p = hit.collider.gameObject.GetComponent<_Player>();
+            _MapPlayer p = hit.collider.gameObject.GetComponent<_MapPlayer>();
             p.LoseLife(dmg);
         }
         else if (hit.collider.tag == "Wall" || hit.collider.tag == "Enemy" || hit.collider.tag == "blocking")
@@ -131,18 +131,22 @@ public class _MapEnemy : _Enemy
             }
         }
     }
-    
 
+    public int l;
+    public int d;
+    public int r;
 
 	// Use this for initialization
 	void Start () 
     {
-	
+        life = l;
+        dmg = d;
+        range = r;
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-	
+        l = life;
 	}
 }

@@ -20,13 +20,10 @@ public class _GameManager : MonoBehaviour
 
 
 
-    void Start()
-    {
-        instance = this;
-    }
 
     void Awake()
     {
+        instance = this;
         DontDestroyOnLoad(transform.gameObject);
     }
 }

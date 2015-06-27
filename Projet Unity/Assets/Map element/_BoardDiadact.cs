@@ -40,7 +40,7 @@ public class _BoardDiadact : MonoBehaviour
     {
         if (n == 2)
         {
-            _GameManager.instance.set_niv(0);
+            _GameManager.niveau = 0;
             _GameManager.instance.player.set_life(10); // changement verif si marche encore
             //Destroy(gameObject);
             Application.LoadLevel("Menu0.2");

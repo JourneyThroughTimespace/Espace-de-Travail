@@ -105,6 +105,9 @@ public class _BoardGame : MonoBehaviour
         {
             sortie[1]++;
         }
+        board[sortie.ElementAt(0), sortie.ElementAt(1)] = 'o';
+        board[sortie.ElementAt(0) - 1, sortie.ElementAt(1)] = 'o';
+        board[sortie.ElementAt(0) + 1, sortie.ElementAt(1)] = 'o';
 
         //position perso
         List<int> per = rooms[Random.Range(0, rooms.Count)];
@@ -659,6 +662,9 @@ public class _BoardGame : MonoBehaviour
             }
         }
 
+        board[sortie.ElementAt(0) - 1, sortie.ElementAt(1)] = 'w';
+        board[sortie.ElementAt(0) + 1, sortie.ElementAt(1)] = 'w';
+
         //int perso_nb = Random.Range(0, rooms.Count);
         //List<int> per = rooms[Random.Range(0, rooms.Count)];
         //rooms.RemoveAt(perso_nb);
@@ -690,11 +696,17 @@ public class _BoardGame : MonoBehaviour
         if (n == 0)
         {
             p1 = ((GameObject)Instantiate(perso, new Vector3(per.ElementAt(0), 0, per.ElementAt(1)), Quaternion.identity)).GetComponent<_MapPlayer>();
+            
         }
         else
         {
             p1 = ((GameObject)Instantiate(perso, new Vector3(per.ElementAt(0), 0, per.ElementAt(1)), Quaternion.identity)).GetComponent<_MapPlayer>();
-            p1 = _GameManager.instance.player.GetComponent<_MapPlayer>();
+            //camera.transform.Translate(per.ElementAt(0) - p1.transform.position.x, 0, per.ElementAt(1) - p1.transform.position.z);
+            p1.set_life(_GameManager.instance.player.get_life());
+            p1.set_dmg(_GameManager.instance.player.get_dmg());
+            p1.set_range(_GameManager.instance.player.get_range());
+            //p1 = GameObject.FindGameObjectWithTag("Player").GetComponent<_MapPlayer>();
+            //p1.transform.Translate(per.ElementAt(0) - p1.transform.position.x, 0, per.ElementAt(1) - p1.transform.position.z);
         }
         li.transform.Translate(per.ElementAt(0), per.ElementAt(1) + 2, 0);
         Instantiate(camera, new Vector3(per.ElementAt(0), 6, per.ElementAt(1) - 4), Quaternion.Euler(60, 0, 0));
@@ -825,21 +837,23 @@ public class _BoardGame : MonoBehaviour
 
 	void Start () 
     {
-        //p1 = null;
-        //enemies = null;
+        p1 = null;
         instance = this;
         game_State = 0;
         a_maze_ing(_GameManager.niveau);
-        //if (p1 == null || enemies == null)
-        //{
-        //    Application.LoadLevel(Application.loadedLevel);
-        //}
 	}
 
     public void next_level()
     {
         _GameManager.niveau++;
-        Application.LoadLevel("Map");
+        if (_GameManager.niveau % 2 == 0)
+        {
+            Application.LoadLevel("Map");
+        }
+        else
+        {
+            Application.LoadLevel("Map2");
+        }
     }
 
     public void change_State()
@@ -858,6 +872,7 @@ public class _BoardGame : MonoBehaviour
         if (game_State % 3 <= 1)
         {
             p1.turnUpdate();
+            
         }
         if (game_State % 3 == 2)
         {

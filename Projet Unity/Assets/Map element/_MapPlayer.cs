@@ -28,7 +28,7 @@ public class _MapPlayer : _Entity
         //d = dmg;
         //r = range;
         instance = this;
-        DontDestroyOnLoad(transform.gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
 
@@ -38,22 +38,19 @@ public class _MapPlayer : _Entity
     {
         if (Input.GetKeyDown("w"))
         {
-            move_forward();     
+            move_forward();
         }
         else if (Input.GetKeyDown("a"))
         {
             move_left();
-            //_BoardGame.instance.change_State();
         }
         else if (Input.GetKeyDown("s"))
         {
             move_back();
-            //_BoardGame.instance.change_State();
         }
         else if (Input.GetKeyDown("d"))
         {
             move_right();
-            //_BoardGame.instance.change_State();
         }
 
     }
@@ -95,11 +92,14 @@ public class _MapPlayer : _Entity
             else if (hit.collider.tag == "Exit")
             {
                 //audio2.PlayOneShot(choc, 0.8F);
-                _GameManager.instance.player.set_life(10);
-                _GameManager.niveau++;
-                //Destroy(gameObject);
-                _GameManager.instance.player = this;
+                _GameManager.instance.player.set_life(life);
+                _GameManager.instance.player.set_dmg(dmg);
+                _GameManager.instance.player.set_range(range);
                 gameObject.SetActive(false);
+                //_BoardGame.instance.camera.SetActive(false);
+                //Destroy(gameObject);
+                //_GameManager.instance.player = this;
+                //gameObject.SetActive(false);
                 _BoardGame.instance.next_level();
             }
             else if (hit.collider.tag == "blocking")

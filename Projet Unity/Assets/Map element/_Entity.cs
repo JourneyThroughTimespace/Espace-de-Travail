@@ -39,7 +39,7 @@ public abstract class _Entity : MonoBehaviour
     
     void Start () 
     {
-	
+        
 	}
 	
 	
