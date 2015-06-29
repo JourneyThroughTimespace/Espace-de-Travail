@@ -4,6 +4,8 @@ using System.Collections;
 public class _didactEnemy : _Enemy 
 {
     //public static _didactEnemy instance;
+
+    public int ennemyStatusEffect;
 	
 	void Start () 
     {

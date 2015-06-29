@@ -10,7 +10,7 @@ public class _BoardGame : MonoBehaviour
 {
     public static _BoardGame instance;
 
-    public GameObject brick;
+    public GameObject[] brick;
     public GameObject perso;
     public GameObject sol;
     public GameObject exit;
@@ -684,7 +684,7 @@ public class _BoardGame : MonoBehaviour
                 Instantiate(sol, new Vector3(i, -0.5f, j), Quaternion.identity);
                 if (board[i, j] == 'w')
                 {
-                    Instantiate(brick, new Vector3(i, 0, j), Quaternion.identity);
+                    Instantiate(brick[Random.Range(0, brick.Length)], new Vector3(i, 0, j), Quaternion.identity);
                 }
                 if (board[i, j] == 'o')
                 {
@@ -705,8 +705,12 @@ public class _BoardGame : MonoBehaviour
             //camera.transform.Translate(per.ElementAt(0) - camera.transform.position.x, 6, per.ElementAt(1) - camera.transform.position.z);
             Instantiate(camera, new Vector3(per.ElementAt(0), 6, per.ElementAt(1) - 4), Quaternion.Euler(60, 0, 0));
             p1.set_life(_GameManager.instance.player.get_life());
+            p1.l = _GameManager.instance.player.GetComponent<_MapPlayer>().l;
             p1.set_dmg(_GameManager.instance.player.get_dmg());
+            p1.d = _GameManager.instance.player.GetComponent<_MapPlayer>().d;
             p1.set_range(_GameManager.instance.player.get_range());
+            p1.r = _GameManager.instance.player.GetComponent<_MapPlayer>().r;
+            p1.currentWeaponName = _GameManager.instance.player.GetComponent<_MapPlayer>().currentWeaponName;
         }
         li.transform.Translate(per.ElementAt(0), per.ElementAt(1) + 2, 0);
         
@@ -730,8 +734,13 @@ public class _BoardGame : MonoBehaviour
             }
         }
         gameBoard = board;
+
+        if(board[per.ElementAt(0), per.ElementAt(1)] == 'o')
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
     }
-    public string solve(char[,] sol, Transform player, Transform enemy, int range)
+    public string solve(Transform player, Transform enemy, int range)
     {
         int en_x = (int)enemy.transform.position.x;
         int en_y = (int)enemy.transform.position.z;
@@ -744,7 +753,7 @@ public class _BoardGame : MonoBehaviour
         {
             for (int j = 0; j < dungeon_length; j++)
             {
-                if (sol[i, j] == 'w' || sol[i, j] == 'd')
+                if (gameBoard[i, j] == 'w' || gameBoard[i, j] == 'd')
                 {
                     temp_board[i, j] = "w";
                 }
@@ -796,11 +805,11 @@ public class _BoardGame : MonoBehaviour
         {
             return ("null");
         }
-        else if ((px <= range && px > 1 || px < -1 || px >= -range) && (pz > 0 && pz < range) && sol[en_x, en_y - 1] != 'w' )
+        else if ((px <= range && px > 1 || px < -1 || px >= -range) && (pz > 0 && pz < range) && gameBoard[en_x, en_y - 1] != 'w' )
         {
             return ("back");
         }
-        else if ((px <= range && px > 1 || px < -1 || px >= -range) && (pz < 0 && pz > -range) && sol[en_x, en_y + 1] != 'w')
+        else if ((px <= range && px > 1 || px < -1 || px >= -range) && (pz < 0 && pz > -range) && gameBoard[en_x, en_y + 1] != 'w')
         {
             return ("forward");
         }

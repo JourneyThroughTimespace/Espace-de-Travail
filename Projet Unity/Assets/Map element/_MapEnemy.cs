@@ -3,9 +3,10 @@ using System.Collections;
 
 public class _MapEnemy : _Enemy
 {
+    public int ennemyStatusEffect;
     public override void turnUpdate(Transform target)
     {
-        string s = _BoardGame.instance.solve(_BoardGame.instance.gameBoard, target.transform, transform, range);
+        string s = _BoardGame.instance.solve(target.transform, transform, range);
         if (s != "null")
         {
             if (s == "right")
@@ -135,6 +136,42 @@ public class _MapEnemy : _Enemy
     public int l;
     public int d;
     public int r;
+
+    public override void PoisonEffect(int poisonDamage, int Duration)
+    {
+        while (Duration > 0)
+        {
+            isPoisoned = true;
+            life -= poisonDamage;
+            Duration = Duration - 1;
+        }
+        isPoisoned = false;
+
+    }
+
+    public override void BurningEffect(int burningDamage, int Duration)
+    {
+        while (Duration > 0)
+        {
+            isBurning = true;
+            life -= burningDamage;
+            Duration = Duration - 1;
+        }
+        isBurning = false;
+    }
+
+  /*  public override void StunEffect(int Duration)
+    {
+
+        while (Duration > 0)
+        {
+            isStun = true;
+
+            Duration = Duration - 1;
+        }
+        isStun = false;
+    }
+   * */
 
 	// Use this for initialization
 	void Start () 

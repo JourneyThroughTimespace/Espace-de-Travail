@@ -3,7 +3,7 @@ using System.Collections;
 
 public class _didactEnemyRange : _Enemy 
 {
-    
+    int StatusEffectEnnemy;
 
 	void Start () 
     {

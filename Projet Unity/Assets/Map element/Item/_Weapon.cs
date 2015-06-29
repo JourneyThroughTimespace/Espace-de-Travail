@@ -5,4 +5,7 @@ public class _Weapon : MonoBehaviour
 {
     public int dmg;
     public int range;
+    public int weaponStatusEffect;
+    public string weaponName;
+
 }

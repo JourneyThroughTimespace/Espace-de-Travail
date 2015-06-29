@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class _Player : _Entity
@@ -6,7 +7,18 @@ public class _Player : _Entity
     public int l;
     public int d;
     public int r;
+    public int weaponStatusEffect;
     public static _Player instance;
+
+    public Slider healthSlider;
+
+    public _Weapon currentWeapon;
+
+    public Image damageImage;
+
+    public float flashSpeed = 5f;
+    public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+    public GameObject HealthUI;
 
     public override void LoseLife(int loss)
     {
@@ -264,6 +276,28 @@ public class _Player : _Entity
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
             }
         }
+    }
+
+    override public void BurningEffect(int burningDamage, int Duration)
+    {
+        while (Duration > 0)
+        {
+            isBurning = true;
+            life -= burningDamage;
+            Duration = Duration - 1;
+        }
+        isBurning = false;
+    }
+
+    public override void PoisonEffect(int poisonDamage, int Duration)
+    {
+        while (Duration > 0)
+        {
+            isPoisoned = true;
+            life -= poisonDamage;
+            Duration = Duration - 1;
+        }
+        isPoisoned = false;
     }
 
 

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class persoMenu : MonoBehaviour {
+public class persoMenu : MonoBehaviour
+{
 
     public static persoMenu instance;
     public bool move = false;
@@ -22,28 +23,29 @@ public class persoMenu : MonoBehaviour {
     int compt2;
     public AudioClip pas;
     public AudioClip choc;
-    AudioSource audio;
-    AudioSource audio2;
-
+    public static AudioSource audio;
+    public static AudioSource audio2;
     public Transform light;
 
-	// Use this for initialization
-	void Start () 
+    // Use this for initialization
+    void Start()
     {
         audio = GetComponent<AudioSource>();
         audio2 = GetComponent<AudioSource>();
         instance = this;
+        audio.volume = 1.0F;
+        audio2.volume = 1.0F;
         compt = 5;
         compt2 = 5;
         light.transform.Translate(0, 0, 0);
-	}
+    }
     private void NextLevel()
     {
         Application.LoadLevel(Application.loadedLevel);
     }
-	
-	// Update is called once per frame
-	void Update () 
+
+    // Update is called once per frame
+    void Update()
     {
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
         Vector3 lef = transform.TransformDirection(Vector3.left);
@@ -55,159 +57,189 @@ public class persoMenu : MonoBehaviour {
             Physics.Raycast(transform.position, fwd, out hit, 1);
             if (!Physics.Raycast(transform.position, fwd, 1))
             {
-                audio.PlayOneShot(pas, 0.8F);
+                audio.PlayOneShot(pas);
                 transform.Translate(Vector3.forward);
                 //rotate_model.instance.turn_back();
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 Camera_mvt.instance.Cam_mvt_up();
                 //Light_mvt.instance.light_mvt_up();
-                
+
 
                 //Map_didact.instance.change_state(Map_didact.instance.game_state + 1);
             }
             else if (hit.collider.tag == "cubeplay")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.LoadLevel("Map");
             }
             else if (hit.collider.tag == "cubetuto")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.LoadLevel("Didactitiel");
             }
             else if (hit.collider.tag == "cubemulti")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                Application.LoadLevel("Multi_build");
+                audio2.PlayOneShot(choc);
+                Application.LoadLevel("Menu0.3");
             }
             else if (hit.collider.tag == "Exit")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 NextLevel();
             }
             else if (hit.collider.tag == "Exit2")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.Quit();
             }
             else if (hit.collider.tag == "plusvol")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
-                if(compt == 0)
+                if (compt == 0)
                 {
+                    AudioListener.volume = 0.2F;
                     vol1.GetComponent<Renderer>().material = mat1;
                     compt++;
                 }
                 else if (compt == 1)
                 {
                     vol2.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.4F;
                     compt++;
                 }
                 else if (compt == 2)
                 {
                     vol3.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.6F;
                     compt++;
                 }
                 else if (compt == 3)
                 {
                     vol4.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.8F;
                     compt++;
                 }
                 else if (compt == 4)
                 {
                     vol5.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 1.0F;
                     compt++;
-                }      
+                }
             }
             else if (hit.collider.tag == "moinsvol")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 if (compt == 5)
                 {
                     vol5.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.8F;
                     compt--;
                 }
                 else if (compt == 4)
                 {
                     vol4.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.6F;
                     compt--;
                 }
                 else if (compt == 3)
                 {
                     vol3.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.4F;
                     compt--;
                 }
                 else if (compt == 2)
                 {
                     vol2.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.2F;
                     compt--;
                 }
                 else if (compt == 1)
                 {
                     vol1.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.0F;
                     compt--;
                 }
 
             }
             else if (hit.collider.tag == "pluseff")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 if (compt2 == 0)
                 {
                     voll1.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.2F;
+                    audio2.volume = 0.2F;
                     compt2++;
                 }
                 else if (compt2 == 1)
                 {
                     voll2.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.4F;
+                    audio2.volume = 0.4F;
                     compt2++;
                 }
                 else if (compt2 == 2)
                 {
                     voll3.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.6F;
+                    audio2.volume = 0.6F;
                     compt2++;
                 }
                 else if (compt2 == 3)
                 {
                     voll4.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.8F;
+                    audio2.volume = 0.8F;
                     compt2++;
                 }
                 else if (compt2 == 4)
                 {
                     voll5.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 1.0F;
+                    audio2.volume = 1.0F;
                     compt2++;
                 }
             }
             else if (hit.collider.tag == "moinseff")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 if (compt2 == 5)
                 {
                     voll5.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.8F;
+                    audio2.volume = 0.8F;
                     compt2--;
                 }
                 else if (compt2 == 4)
                 {
                     voll4.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.6F;
+                    audio2.volume = 0.6F;
                     compt2--;
                 }
                 else if (compt2 == 3)
                 {
                     voll3.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.4F;
+                    audio2.volume = 0.4F;
                     compt2--;
                 }
                 else if (compt2 == 2)
                 {
                     voll2.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.2F;
+                    audio2.volume = 0.2F;
                     compt2--;
                 }
                 else if (compt2 == 1)
                 {
                     voll1.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.0F;
+                    audio2.volume = 0.0F;
                     compt2--;
                 }
 
@@ -221,7 +253,7 @@ public class persoMenu : MonoBehaviour {
             Physics.Raycast(transform.position, lef, out hit, 1);
             if (!Physics.Raycast(transform.position, lef, 1))
             {
-                audio.PlayOneShot(pas, 0.8F);
+                audio.PlayOneShot(pas);
                 transform.Translate(Vector3.left);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
                 Camera_mvt.instance.Cam_mvt_left();
@@ -230,147 +262,177 @@ public class persoMenu : MonoBehaviour {
             }
             else if (hit.collider.tag == "cubeplay")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.LoadLevel("Map");
             }
             else if (hit.collider.tag == "cubetuto")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.LoadLevel("Didactitiel");
             }
             else if (hit.collider.tag == "cubemulti")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                Application.LoadLevel("Multi_build");
+                audio2.PlayOneShot(choc);
+                Application.LoadLevel("Menu0.3");
             }
             else if (hit.collider.tag == "Exit")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 NextLevel();
             }
             else if (hit.collider.tag == "Exit2")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.Quit();
             }
             else if (hit.collider.tag == "plusvol")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 if (compt == 0)
                 {
+                    AudioListener.volume = 0.2F;
                     vol1.GetComponent<Renderer>().material = mat1;
                     compt++;
                 }
                 else if (compt == 1)
                 {
                     vol2.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.4F;
                     compt++;
                 }
                 else if (compt == 2)
                 {
                     vol3.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.6F;
                     compt++;
                 }
                 else if (compt == 3)
                 {
                     vol4.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.8F;
                     compt++;
                 }
                 else if (compt == 4)
                 {
                     vol5.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 1.0F;
                     compt++;
                 }
             }
             else if (hit.collider.tag == "moinsvol")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 if (compt == 5)
                 {
                     vol5.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.8F;
                     compt--;
                 }
                 else if (compt == 4)
                 {
                     vol4.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.6F;
                     compt--;
                 }
                 else if (compt == 3)
                 {
                     vol3.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.4F;
                     compt--;
                 }
                 else if (compt == 2)
                 {
                     vol2.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.2F;
                     compt--;
                 }
                 else if (compt == 1)
                 {
                     vol1.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.0F;
                     compt--;
                 }
 
             }
             else if (hit.collider.tag == "pluseff")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 if (compt2 == 0)
                 {
                     voll1.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.2F;
+                    audio2.volume = 0.2F;
                     compt2++;
                 }
                 else if (compt2 == 1)
                 {
                     voll2.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.4F;
+                    audio2.volume = 0.4F;
                     compt2++;
                 }
                 else if (compt2 == 2)
                 {
                     voll3.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.6F;
+                    audio2.volume = 0.6F;
                     compt2++;
                 }
                 else if (compt2 == 3)
                 {
                     voll4.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.8F;
+                    audio2.volume = 0.8F;
                     compt2++;
                 }
                 else if (compt2 == 4)
                 {
                     voll5.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 1.0F;
+                    audio2.volume = 1.0F;
                     compt2++;
                 }
             }
             else if (hit.collider.tag == "moinseff")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 if (compt2 == 5)
                 {
                     voll5.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.8F;
+                    audio2.volume = 0.8F;
                     compt2--;
                 }
                 else if (compt2 == 4)
                 {
                     voll4.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.6F;
+                    audio2.volume = 0.6F;
                     compt2--;
                 }
                 else if (compt2 == 3)
                 {
                     voll3.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.4F;
+                    audio2.volume = 0.4F;
                     compt2--;
                 }
                 else if (compt2 == 2)
                 {
                     voll2.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.2F;
+                    audio2.volume = 0.2F;
                     compt2--;
                 }
                 else if (compt2 == 1)
                 {
                     voll1.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.0F;
+                    audio2.volume = 0.0F;
                     compt2--;
                 }
 
@@ -384,7 +446,7 @@ public class persoMenu : MonoBehaviour {
             Physics.Raycast(transform.position, bac, out hit, 1);
             if (!Physics.Raycast(transform.position, bac, 1))
             {
-                audio.PlayOneShot(pas, 0.8F);
+                audio.PlayOneShot(pas);
                 transform.Translate(Vector3.back);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
                 Camera_mvt.instance.Cam_mvt_down();
@@ -393,147 +455,177 @@ public class persoMenu : MonoBehaviour {
             }
             else if (hit.collider.tag == "cubeplay")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.LoadLevel("Map");
             }
             else if (hit.collider.tag == "cubetuto")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.LoadLevel("Didactitiel");
             }
             else if (hit.collider.tag == "cubemulti")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                Application.LoadLevel("Multi_build");
+                audio2.PlayOneShot(choc);
+                Application.LoadLevel("Menu0.3");
             }
             else if (hit.collider.tag == "Exit")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 NextLevel();
             }
             else if (hit.collider.tag == "Exit2")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.Quit();
             }
             else if (hit.collider.tag == "plusvol")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 if (compt == 0)
                 {
+                    AudioListener.volume = 0.2F;
                     vol1.GetComponent<Renderer>().material = mat1;
                     compt++;
                 }
                 else if (compt == 1)
                 {
                     vol2.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.4F;
                     compt++;
                 }
                 else if (compt == 2)
                 {
                     vol3.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.6F;
                     compt++;
                 }
                 else if (compt == 3)
                 {
                     vol4.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.8F;
                     compt++;
                 }
                 else if (compt == 4)
                 {
                     vol5.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 1.0F;
                     compt++;
                 }
             }
             else if (hit.collider.tag == "moinsvol")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 if (compt == 5)
                 {
                     vol5.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.8F;
                     compt--;
                 }
                 else if (compt == 4)
                 {
                     vol4.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.6F;
                     compt--;
                 }
                 else if (compt == 3)
                 {
                     vol3.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.4F;
                     compt--;
                 }
                 else if (compt == 2)
                 {
                     vol2.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.2F;
                     compt--;
                 }
                 else if (compt == 1)
                 {
                     vol1.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.0F;
                     compt--;
                 }
 
             }
             else if (hit.collider.tag == "pluseff")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 if (compt2 == 0)
                 {
                     voll1.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.2F;
+                    audio2.volume = 0.2F;
                     compt2++;
                 }
                 else if (compt2 == 1)
                 {
                     voll2.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.4F;
+                    audio2.volume = 0.4F;
                     compt2++;
                 }
                 else if (compt2 == 2)
                 {
                     voll3.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.6F;
+                    audio2.volume = 0.6F;
                     compt2++;
                 }
                 else if (compt2 == 3)
                 {
                     voll4.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.8F;
+                    audio2.volume = 0.8F;
                     compt2++;
                 }
                 else if (compt2 == 4)
                 {
                     voll5.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 1.0F;
+                    audio2.volume = 1.0F;
                     compt2++;
                 }
             }
             else if (hit.collider.tag == "moinseff")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 if (compt2 == 5)
                 {
                     voll5.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.8F;
+                    audio2.volume = 0.8F;
                     compt2--;
                 }
                 else if (compt2 == 4)
                 {
                     voll4.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.6F;
+                    audio2.volume = 0.6F;
                     compt2--;
                 }
                 else if (compt2 == 3)
                 {
                     voll3.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.4F;
+                    audio2.volume = 0.4F;
                     compt2--;
                 }
                 else if (compt2 == 2)
                 {
                     voll2.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.2F;
+                    audio2.volume = 0.2F;
                     compt2--;
                 }
                 else if (compt2 == 1)
                 {
                     voll1.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.0F;
+                    audio2.volume = 0.0F;
                     compt2--;
                 }
 
@@ -547,7 +639,7 @@ public class persoMenu : MonoBehaviour {
             Physics.Raycast(transform.position, rig, out hit, 1);
             if (!Physics.Raycast(transform.position, rig, 1))
             {
-                audio.PlayOneShot(pas, 0.8F);
+                audio.PlayOneShot(pas);
                 transform.Translate(Vector3.right);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 Camera_mvt.instance.Cam_mvt_right();
@@ -556,151 +648,181 @@ public class persoMenu : MonoBehaviour {
             }
             else if (hit.collider.tag == "cubeplay")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.LoadLevel("Map");
             }
             else if (hit.collider.tag == "cubetuto")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.LoadLevel("Didactitiel");
             }
             else if (hit.collider.tag == "cubemulti")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                Application.LoadLevel("Multi_build");
+                audio2.PlayOneShot(choc);
+                Application.LoadLevel("Menu0.3");
             }
             else if (hit.collider.tag == "Exit")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 NextLevel();
             }
             else if (hit.collider.tag == "Exit2")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 Application.Quit();
             }
             else if (hit.collider.tag == "plusvol")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 if (compt == 0)
                 {
+                    AudioListener.volume = 0.2F;
                     vol1.GetComponent<Renderer>().material = mat1;
                     compt++;
                 }
                 else if (compt == 1)
                 {
                     vol2.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.4F;
                     compt++;
                 }
                 else if (compt == 2)
                 {
                     vol3.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.6F;
                     compt++;
                 }
                 else if (compt == 3)
                 {
                     vol4.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 0.8F;
                     compt++;
                 }
                 else if (compt == 4)
                 {
                     vol5.GetComponent<Renderer>().material = mat1;
+                    AudioListener.volume = 1.0F;
                     compt++;
                 }
             }
             else if (hit.collider.tag == "moinsvol")
             {
-                audio2.PlayOneShot(choc, 0.8F);
-                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
+                audio2.PlayOneShot(choc);
+                transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 if (compt == 5)
                 {
                     vol5.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.8F;
                     compt--;
                 }
                 else if (compt == 4)
                 {
                     vol4.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.6F;
                     compt--;
                 }
                 else if (compt == 3)
                 {
                     vol3.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.4F;
                     compt--;
                 }
                 else if (compt == 2)
                 {
                     vol2.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.2F;
                     compt--;
                 }
                 else if (compt == 1)
                 {
                     vol1.GetComponent<Renderer>().material = mat2;
+                    AudioListener.volume = 0.0F;
                     compt--;
                 }
 
             }
             else if (hit.collider.tag == "pluseff")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 if (compt2 == 0)
                 {
                     voll1.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.2F;
+                    audio2.volume = 0.2F;
                     compt2++;
                 }
                 else if (compt2 == 1)
                 {
                     voll2.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.4F;
+                    audio2.volume = 0.4F;
                     compt2++;
                 }
                 else if (compt2 == 2)
                 {
                     voll3.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.6F;
+                    audio2.volume = 0.6F;
                     compt2++;
                 }
                 else if (compt2 == 3)
                 {
                     voll4.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 0.8F;
+                    audio2.volume = 0.8F;
                     compt2++;
                 }
                 else if (compt2 == 4)
                 {
                     voll5.GetComponent<Renderer>().material = mat1;
+                    audio.volume = 1.0F;
+                    audio2.volume = 1.0F;
                     compt2++;
                 }
             }
             else if (hit.collider.tag == "moinseff")
             {
-                audio2.PlayOneShot(choc, 0.8F);
+                audio2.PlayOneShot(choc);
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 if (compt2 == 5)
                 {
                     voll5.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.8F;
+                    audio2.volume = 0.8F;
                     compt2--;
                 }
                 else if (compt2 == 4)
                 {
                     voll4.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.6F;
+                    audio2.volume = 0.6F;
                     compt2--;
                 }
                 else if (compt2 == 3)
                 {
                     voll3.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.4F;
+                    audio2.volume = 0.4F;
                     compt2--;
                 }
                 else if (compt2 == 2)
                 {
                     voll2.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.2F;
+                    audio2.volume = 0.2F;
                     compt2--;
                 }
                 else if (compt2 == 1)
                 {
                     voll1.GetComponent<Renderer>().material = mat2;
+                    audio.volume = 0.0F;
+                    audio2.volume = 0.0F;
                     compt2--;
                 }
 
             }
         }
-	}
+    }
 }
