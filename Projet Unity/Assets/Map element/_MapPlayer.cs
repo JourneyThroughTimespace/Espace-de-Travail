@@ -57,6 +57,8 @@ public class _MapPlayer : _Entity
         l = life;
     }
 
+    
+
     void Start()
     {
         audio = GetComponent<AudioSource>();
@@ -116,7 +118,7 @@ public class _MapPlayer : _Entity
             transform.Translate(Vector3.forward);
             _BoardGame.instance.change_State();
             Camera_mvt.instance.Cam_mvt_up();
-            Light_mvt.instance.light_mvt_up();
+            _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_up();
             /*_BoardGame.instance.camera.transform.Rotate(30, 0, 0);
             _BoardGame.instance.camera.transform.Translate(Vector3.up);
             _BoardGame.instance.camera.transform.Rotate(-30, 0, 0);*/
@@ -140,7 +142,7 @@ public class _MapPlayer : _Entity
                 transform.Translate(Vector3.forward);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_up();
-                Light_mvt.instance.light_mvt_up();
+                _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_up();
                 /*_BoardGame.instance.camera.transform.Rotate(30, 0, 0);
                 _BoardGame.instance.camera.transform.Translate(Vector3.up);
                 _BoardGame.instance.camera.transform.Rotate(-30, 0, 0);*/
@@ -179,6 +181,7 @@ public class _MapPlayer : _Entity
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y, 0);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_up();
+                _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_up();
                 Destroy(hit.collider.gameObject);
             }
             else if (hit.collider.tag == "Weapon")
@@ -212,7 +215,7 @@ public class _MapPlayer : _Entity
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
             _BoardGame.instance.change_State();
             Camera_mvt.instance.Cam_mvt_left();
-            Light_mvt.instance.light_mvt_left();
+            _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_left();
         }
         else if (hit.collider.tag == "Enemy")
         {
@@ -232,7 +235,7 @@ public class _MapPlayer : _Entity
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_left();
-                Light_mvt.instance.light_mvt_left();
+                _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_left();
             }
             else if (hit.collider.tag == "blocking")
             {
@@ -254,6 +257,7 @@ public class _MapPlayer : _Entity
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y - 90, 0);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_left();
+                _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_left();
                 Destroy(hit.collider.gameObject);
             }
             else if (hit.collider.tag == "Weapon")
@@ -286,7 +290,7 @@ public class _MapPlayer : _Entity
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
             _BoardGame.instance.change_State();
             Camera_mvt.instance.Cam_mvt_down();
-            Light_mvt.instance.light_mvt_down();
+            _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_down();
         }
         else if (hit.collider.tag == "Enemy")
         {
@@ -306,7 +310,7 @@ public class _MapPlayer : _Entity
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_down();
-                Light_mvt.instance.light_mvt_down();
+                _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_down();
             }
             else if (hit.collider.tag == "blocking")
             {
@@ -328,6 +332,7 @@ public class _MapPlayer : _Entity
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 180, 0);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_down();
+                _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_down();
                 Destroy(hit.collider.gameObject);
             }
             else if (hit.collider.tag == "Weapon")
@@ -359,7 +364,7 @@ public class _MapPlayer : _Entity
             transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
             _BoardGame.instance.change_State();
             Camera_mvt.instance.Cam_mvt_right();
-            Light_mvt.instance.light_mvt_right();
+            _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_right();
         }
         else if (hit.collider.tag == "Enemy")
         {
@@ -379,7 +384,7 @@ public class _MapPlayer : _Entity
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_right();
-                Light_mvt.instance.light_mvt_right();
+                _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_right();
             }
             else if (hit.collider.tag == "blocking")
             {
@@ -401,6 +406,7 @@ public class _MapPlayer : _Entity
                 transform.GetChild(0).Rotate(0, -transform.GetChild(0).eulerAngles.y + 90, 0);
                 _BoardGame.instance.change_State();
                 Camera_mvt.instance.Cam_mvt_right();
+                _BoardGame.instance.li.GetComponent<Light_mvt>().light_mvt_right();
                 Destroy(hit.collider.gameObject);
             }
             else if (hit.collider.tag == "Weapon")

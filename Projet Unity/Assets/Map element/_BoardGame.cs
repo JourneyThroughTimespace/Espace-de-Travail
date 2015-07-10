@@ -712,7 +712,9 @@ public class _BoardGame : MonoBehaviour
             p1.r = _GameManager.instance.player.GetComponent<_MapPlayer>().r;
             p1.currentWeaponName = _GameManager.instance.player.GetComponent<_MapPlayer>().currentWeaponName;
         }
+        li.transform.Rotate(5, 0, 0);
         li.transform.Translate(per.ElementAt(0), per.ElementAt(1) + 2, 0);
+        li.transform.Rotate(-5, 0, 0);
         
 
         foreach (List<int> en in enem)
@@ -878,9 +880,12 @@ public class _BoardGame : MonoBehaviour
         {
             p1.gameObject.SetActive(false);
             _GameManager.niveau = 0;
-            _GameManager.instance.player.set_life(10);
-            _GameManager.instance.player.set_dmg(5);
+            _GameManager.instance.player.set_life(100);
+            _GameManager.instance.GetComponent<_MapPlayer>().l = 10;
+            _GameManager.instance.player.set_dmg(20);
+            _GameManager.instance.GetComponent<_MapPlayer>().d = 20;
             _GameManager.instance.player.set_range(1);
+            _GameManager.instance.GetComponent<_MapPlayer>().r = 1;
             Application.LoadLevel("Menu0.2");
         }
         if (game_State % 3 <= 1)
